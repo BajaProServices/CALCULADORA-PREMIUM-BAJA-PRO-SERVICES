@@ -156,15 +156,15 @@ label{display:block;margin-bottom:4px;font-size:12px;font-weight:600;color:var(-
     <div class="cert-card"><strong>EC0586.01:</strong> <span id="cert1"></span></div>
     <div class="cert-card"><strong>EC1181:</strong> <span id="cert2"></span></div>
     <div class="icon-grid">
-      <div class="icon-item"><img src="110Ah.png" onerror="this.style.display='none'" alt=""><span>110Ah</span></div>
-      <div class="icon-item"><img src="6000ciclos.png" onerror="this.style.display='none'" alt=""><span>6000 <span class="tc"></span></span></div>
-      <div class="icon-item"><img src="wifi.png" onerror="this.style.display='none'" alt=""><span>WIFI SMART</span></div>
-      <div class="icon-item"><img src="ulcert.png" onerror="this.style.display='none'" alt=""><span>UL CERTIFIED</span></div>
-      <div class="icon-item"><img src="compatible-bate.png" onerror="this.style.display='none'" alt=""><span>BATTERY READY</span></div>
-      <div class="icon-item"><img src="10aosdegarantia.png" onerror="this.style.display='none'" alt=""><span>10 <span class="ty"></span></span></div>
-      <div class="icon-item"><img src="optimizada-energia-solar.png" onerror="this.style.display='none'" alt=""><span>SOLAR OPT</span></div>
-      <div class="icon-item"><img src="heavy-duty.png" onerror="this.style.display='none'" alt=""><span>HEAVY DUTY</span></div>
-      <div class="icon-item"><img src="descarga.png" onerror="this.style.display='none'" alt=""><span>DEEP DISCHARGE</span></div>
+      <div class="icon-item"><img src="110Ah.png" alt="110Ah"><span>110Ah</span></div>
+      <div class="icon-item"><img src="6000ciclos.png" alt="6000 ciclos"><span>6000 <span class="tc"></span></span></div>
+      <div class="icon-item"><img src="wifi.png" alt="WIFI"><span>WIFI SMART</span></div>
+      <div class="icon-item"><img src="ulcert.png" alt="UL"><span>UL CERTIFIED</span></div>
+      <div class="icon-item"><img src="compatible-bate.png" alt="Battery"><span>BATTERY READY</span></div>
+      <div class="icon-item"><img src="10aosdegarantia.png" alt="Garantía"><span>10 <span class="ty"></span></span></div>
+      <div class="icon-item"><img src="optimizada-energia-solar.png" alt="Solar"><span>SOLAR OPT</span></div>
+      <div class="icon-item"><img src="heavy-duty.png" alt="Heavy Duty"><span>HEAVY DUTY</span></div>
+      <div class="icon-item"><img src="descarga.png" alt="Deep Discharge"><span>DEEP DISCHARGE</span></div>
     </div>
     <div class="result-box">
       <div id="i-res-ttl"></div>
@@ -297,7 +297,7 @@ label{display:block;margin-bottom:4px;font-size:12px;font-weight:600;color:var(-
       <div id="a-res-ttl"></div>
       <div class="result-value"><span id="a-panels">0</span> <span id="a-panels-lbl"></span></div>
       <div class="panel-sel"><label id="a-ptype-lbl"></label><div class="panel-picker" id="a-panel-picker"></div></div>
-      <div class="result-sub">ZONA BCS | 6.19 HSP | EFF 85%</div>
+      <div class="result-sub">ZONA BCS | 5.80 HSP | EFF 90%</div>
     </div>
     <div id="a-rows" class="hidden">
       <div class="res-row"><span id="a-dem-lbl"></span><span class="rval"><span id="a-demand">0</span> Wh/día</span></div>
@@ -344,21 +344,21 @@ const BATERIAS=[
   {id:'epcom48', kwh:4.8, es:'Epcom RLB 48V MAX',   en:'Epcom RLB 48V MAX',   img:'RLB10048MAX-p.png',                    precio:23000},
 ];
 const INVERSORES=[
-  {id:'solark8',  kw:8,  es:'Sol-Ark 8K 48V',       en:'Sol-Ark 8K 48V',       img:'8Kw_48V_SOL-ARK.png',                  precio:42000},
+  {id:'solark8',  kw:8,  es:'Sol-Ark 8K 48V',       en:'Sol-Ark 8K 48V',       img:'8Kw-48V-SOL-ARK-p.png',                  precio:42000},
   {id:'solark12', kw:12, es:'Sol-Ark 12K',           en:'Sol-Ark 12K',          img:'12K2P-p-SOL-ARK.png',                  precio:68000},
-  {id:'solark15', kw:15, es:'Sol-Ark 15K',           en:'Sol-Ark 15K',          img:'Sol-Ark_15Kw_48V-220VCA.png',          precio:85000},
-  {id:'solark30', kw:30, es:'Sol-Ark 30K 3F',        en:'Sol-Ark 30K 3-Phase',  img:'Sol-Ark_30Kw_3P.png',                  precio:145000},
-  {id:'must8',    kw:8,  es:'Must 8kW 48V',          en:'Must 8kW 48V',         img:'Must-8Kw-48V-220VCA.png',              precio:35000},
-  {id:'lux12',    kw:12, es:'Lux Power 12kW',        en:'Lux Power 12kW',       img:'Lux_Power_12Kw_3LiFePO4-15Kw.png',    precio:72000},
+  {id:'solark15', kw:15, es:'Sol-Ark 15K',           en:'Sol-Ark 15K',          img:'Sol-Ark-15Kw-48V-p.png',               precio:85000},
+  {id:'solark30', kw:30, es:'Sol-Ark 30K 3F',        en:'Sol-Ark 30K 3-Phase',  img:'Sol-Ark-30Kw-3P-p.png',                precio:145000},
+  {id:'must8',    kw:8,  es:'Must 8kW 48V',          en:'Must 8kW 48V',         img:'Must-8Kw-48V-p.png',                   precio:35000},
+  {id:'lux12',    kw:12, es:'Lux Power 12kW',        en:'Lux Power 12kW',       img:'Lux-Power-12Kw-p.png',                 precio:72000},
   {id:'grow3k',   kw:3,  es:'Growatt SPF3000 48V',   en:'Growatt SPF3000 48V',  img:'SPF3000TLLVM48P-p.png',                precio:18000},
-  {id:'grow3kes', kw:3,  es:'Growatt SPF3000 110V',  en:'Growatt SPF3000 110V', img:'SPF3000TLLVMES-Growatt_48V_110v.png',  precio:17500},
+  {id:'grow3kes', kw:3,  es:'Growatt SPF3000 110V',  en:'Growatt SPF3000 110V', img:'SPF3000TLLVMES-p.png',                 precio:17500},
   {id:'grow6k',   kw:6,  es:'Growatt SPF6000 48V',   en:'Growatt SPF6000 48V',  img:'SPF6000TDVMG2-p.png',                  precio:28000},
 ];
 const KITS_I={8:{img:'KIT8PVEKTOR8R-p.png',es:'Kit Grid-Tied 8kW Ektor',en:'8kW Grid-Tied Kit Ektor'}};
 const KITS_H={8:{img:'KITHYBRID8KSOL-h.png',es:'Kit Híbrido 8K Sol-Ark',en:'Sol-Ark 8K Hybrid Kit'},15:{img:'Sol-Ark_15Kw_4LiFePO4_20Kw.png',es:'Kit Híbrido 15K Sol-Ark 20kWh',en:'Sol-Ark 15K Hybrid Kit 20kWh'}};
 const CARGAS=[
   {id:'ms1', es:'Mini Split 1 Ton',         en:'1-Ton Mini Split',      w:900, img:'mini_split_1_ton.png'},
-  {id:'ms15',es:'Mini Split 1.5 Ton',        en:'1.5-Ton Mini Split',    w:1300,img:'mini_splt_1_5_ton.png'},
+  {id:'ms15',es:'Mini Split 1.5 Ton',        en:'1.5-Ton Mini Split',    w:1300,img:'mini_split_1_5_ton.png'}, // Corregido 'splt'
   {id:'ms2', es:'Mini Split 2 Ton',          en:'2-Ton Mini Split',      w:1800,img:'mini_split_2_ton.png'},
   {id:'ref', es:'Refrigerador Side by Side', en:'Side-by-Side Fridge',   w:400, img:'refrigerador_side_by_side.png'},
   {id:'lav', es:'Lavadora',                  en:'Washing Machine',        w:900, img:'lavadora.png'},
@@ -366,23 +366,36 @@ const CARGAS=[
   {id:'lv',  es:'Lavavajillas',              en:'Dishwasher',             w:1500,img:'lavavajillas.png'},
   {id:'cal', es:'Calentador Eléctrico',      en:'Electric Water Heater',  w:4500,img:'calentador_electrico.png'},
   {id:'hor', es:'Horno Eléctrico Pro',       en:'Pro Electric Oven',      w:3000,img:'horno_electrico_pro.png'},
-  {id:'ind', es:'Parrilla de Inducción',     en:'Induction Cooktop',      w:3500,img:'Parrilla_de_induccion.png'},
+  {id:'ind', es:'Parrilla de Inducción',     en:'Induction Cooktop',      w:3500,img:'parrilla_de_induccion.png'},
   {id:'mic', es:'Microondas',                en:'Microwave',              w:1200,img:'microondas.png'},
   {id:'af',  es:'Air Fryer',                 en:'Air Fryer',              w:1700,img:'air_fryer.png'},
   {id:'lic', es:'Licuadora Pro',             en:'Pro Blender',            w:1500,img:'licuadora_pro.png'},
-  {id:'caf', es:'Cafetera Espresso',         en:'Espresso Machine',       w:1000,img:'cafetera_expresso.png'},
+  {id:'caf', es:'Cafetera Espresso',         en:'Espresso Machine',       w:1000,img:'cafetera_espresso.png'}, // Corregido 'expresso'
   {id:'tv',  es:'Pantalla OLED',             en:'OLED TV',                w:300, img:'pantalla_oled.png'},
   {id:'ht',  es:'Home Theatre',              en:'Home Theatre',           w:400, img:'home_theatre.png'},
   {id:'pc',  es:'Computadora Gamer',         en:'Gaming PC',              w:600, img:'computadora_gamer.png'},
   {id:'asp', es:'Aspiradora',                en:'Vacuum Cleaner',         w:800, img:'aspiradora.png'},
   {id:'cam', es:'Cámaras de Seguridad',      en:'Security Cameras',       w:60,  img:'camaras_de_seguridad.png'},
   {id:'cv',  es:'Cava de Vinos',             en:'Wine Cooler',            w:150, img:'cava_de_vinos.png'},
-  {id:'hid', es:'Hidroneumático',            en:'Pressure Tank Pump',     w:750, img:'hidroumatico.png'},
+  {id:'hid', es:'Hidroneumático',            en:'Pressure Tank Pump',     w:750, img:'hidroneumatico.png'}, // Corregido 'hidroumatico'
   {id:'bp',  es:'Bomba para Alberca',        en:'Pool Pump',              w:1500,img:'bomba_para_alberca.png'},
   {id:'por', es:'Portón Eléctrico',          en:'Electric Gate',          w:500, img:'porton_electrico.png'},
   {id:'sca', es:'Secadora de Cabello',       en:'Hair Dryer',             w:1800,img:'secadora_de_cabello.png'},
   {id:'ev',  es:'Cargador Auto Eléctrico',   en:'EV Charger',             w:7400,img:'cargador_de_auto_electrico.png'},
 ];
+
+const BATERIAS=[
+  {id:'pytes51', kwh:5.1, es:'Pytes 48V 5.1kWh',    en:'Pytes 48V 5.1kWh',    img:'Bateria-litio-Pytes-48v-5-1-Kw.png', precio:28000},
+  {id:'pytes117',kwh:11.7,es:'Pytes 48V 11.7kWh',   en:'Pytes 48V 11.7kWh',   img:'Bateria-Pytes-48v-11-7-Kw.png',        precio:58000},
+  {id:'must51',  kwh:5.1, es:'Must LiFePO4 5.1kWh', en:'Must LiFePO4 5.1kWh', img:'Bateria-Must-48V-5-1-Kw.png',          precio:26000},
+  {id:'ebox48',  kwh:5.0, es:'Pytes E-BOX 48100R',  en:'Pytes E-BOX 48100R',  img:'EBOX48100R-p.png',                     precio:27000},
+  {id:'epcom5',  kwh:5.0, es:'Epcom 5kWh',          en:'Epcom 5kWh',           img:'RES1005K-p.png',                       precio:24000},
+  {id:'epcom10', kwh:10.0,es:'Epcom 10kWh',         en:'Epcom 10kWh',          img:'RES20010K-p.png',                      precio:45000},
+  {id:'grow5',   kwh:5.0, es:'Growatt AXE 5.0',     en:'Growatt AXE 5.0',     img:'AXE5_0LC1-p.png',                      precio:29000},
+  {id:'epcom48', kwh:4.8, es:'Epcom RLB 48V MAX',   en:'Epcom RLB 48V MAX',   img:'RLB10048MAX-p.png',                    precio:23000},
+];
+
+
 const TX={
   es:{tagline:'Energía Solar de Alta Eficiencia',tab_i:'INTERCONECTADO',tab_h:'HÍBRIDO',tab_a:'AISLADO',sc:'Información del Cliente',ph_n:'Nombre completo',ph_t:'WhatsApp',ph_d:'Ubicación',su:'Consumo (kWh)',obi:'Residencial (Bimestral)',ome:'Comercial (Mensual)',sc2:'Certificaciones y Calidad',c1:'Instalación de Sistemas Fotovoltaicos (PFVI).',c2:'Supervisión de Instalaciones (IPV).',cyc:'CICLOS',yrs:'AÑOS',res:'SISTEMA SUGERIDO:',plbl:'PANELES',ptyp:'SELECCIONA PANEL:',ltl:'⚡ Tu sistema recomendado',iiva:'Inst+IVA incl',slbl:'Tengo cupón 10% en app SUMA',blbl:'Tu recibo CFE estimado actual:',svlbl:(s)=>`Con solar: $0/mes → Ahorras $${s}/mes`,wabtn:'Enviar por WhatsApp y recibir cotización gratis',cnt:'Un asesor te contacta hoy mismo. Sin compromiso.<br><strong>WhatsApp Ventas: +52 1 612 219 8325</strong> | <strong>Servicio Técnico: +52 1 612 167 3200</strong><br><strong>servicesbajapro@gmail.com</strong>',dlbl:'Enviar a departamento:',osl:'VENTAS',otl:'SERVICIO TÉCNICO',cta:'SOLICITAR COTIZACIÓN',pm:'/mes',alrt:'Por favor ingrese sus datos y consumo.',sbt:'Parámetros de Batería & Respaldo',hhrs:'Horas Respaldo',hdod:'DoD Batería %',hvolt:'Voltaje Banco',hbatsel:'Selecciona tu batería:',hinvsel:'Selecciona tu inversor híbrido:',hbat:'Banco de Baterías (kWh):',hbn:'Baterías sugeridas:',hbu:'unidades',hinv:'Inversor Híbrido sugerido:',hrec:'Recibo CFE actual:',haho:'Ahorro mensual:',hltl:'🔋 Tu sistema Híbrido recomendado',sap:'Consumo de Electrodomésticos',ahnt:'Ingresa unidades y horas de uso diario de cada equipo.',apu:'Uds',aph:'Hrs/día',spr:'Parámetros del Sistema',adas:'Días Autonomía',adod:'DoD Batería %',avlt:'Voltaje Banco',abatsel:'Selecciona tu batería:',ainvsel:'Selecciona tu inversor:',adem:'Demanda diaria total:',abat:'Banco de Baterías:',abn:'Baterías sugeridas:',abu:'unidades',ainv:'Inversor Off-Grid:',altl:'☀️ Tu sistema Aislado recomendado',wgi:'Hola Baja Pro-Services, usé la calculadora INTERCONECTADO:',wgh:'Hola Baja Pro-Services, usé la calculadora HÍBRIDO:',wga:'Hola Baja Pro-Services, usé la calculadora AISLADO:',wbi:'bimestral',wme:'mensual',wsu:'%0A🎟️ Presentaré cupón SUMA -10%',wfr:'Quiero cotización formal gratis. Mi nombre es'},
   en:{tagline:'High-Efficiency Solar Energy',tab_i:'GRID-TIED',tab_h:'HYBRID',tab_a:'OFF-GRID',sc:'Client Information',ph_n:'Full name',ph_t:'WhatsApp',ph_d:'Location',su:'Consumption (kWh)',obi:'Residential (Bi-monthly)',ome:'Commercial (Monthly)',sc2:'Certifications & Quality',c1:'Photovoltaic System Installation (PFVI).',c2:'Installation Supervision (IPV).',cyc:'CYCLES',yrs:'YEARS',res:'SUGGESTED SYSTEM:',plbl:'PANELS',ptyp:'SELECT PANEL:',ltl:'⚡ Your recommended system',iiva:'Install+TAX incl',slbl:'I have 10% SUMA app coupon',blbl:'Your estimated current CFE bill:',svlbl:(s)=>`With solar: $0/mo → You save $${s}/mo`,wabtn:'Send via WhatsApp & get free quote',cnt:'An advisor will contact you today. No commitment.<br><strong>Sales WhatsApp: +52 1 612 219 8325</strong> | <strong>Tech Support: +52 1 612 167 3200</strong><br><strong>servicesbajapro@gmail.com</strong>',dlbl:'Send to department:',osl:'SALES',otl:'TECHNICAL SUPPORT',cta:'REQUEST QUOTE',pm:'/mo',alrt:'Please enter your information and consumption.',sbt:'Battery & Backup Parameters',hhrs:'Backup Hours',hdod:'Battery DoD %',hvolt:'Bank Voltage',hbatsel:'Select your battery:',hinvsel:'Select your hybrid inverter:',hbat:'Battery Bank (kWh):',hbn:'Suggested batteries:',hbu:'units',hinv:'Suggested Hybrid Inverter:',hrec:'Current CFE bill:',haho:'Monthly savings:',hltl:'🔋 Your recommended Hybrid system',sap:'Appliance Consumption',ahnt:'Enter units and daily hours of use for each appliance.',apu:'Units',aph:'Hrs/day',spr:'System Parameters',adas:'Autonomy Days',adod:'Battery DoD %',avlt:'Bank Voltage',abatsel:'Select your battery:',ainvsel:'Select your inverter:',adem:'Total daily demand:',abat:'Required battery bank:',abn:'Suggested batteries:',abu:'units',ainv:'Off-Grid Inverter:',altl:'☀️ Your recommended Off-Grid system',wgi:'Hi Baja Pro-Services, I used the GRID-TIED calculator:',wgh:'Hi Baja Pro-Services, I used the HYBRID calculator:',wga:'Hi Baja Pro-Services, I used the OFF-GRID calculator:',wbi:'bi-monthly',wme:'monthly',wsu:'%0A🎟️ I will present SUMA coupon -10%',wfr:'I want a free formal quote. My name is'}
