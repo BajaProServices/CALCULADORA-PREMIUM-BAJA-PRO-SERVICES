@@ -19,7 +19,7 @@ header{text-align:center;margin-bottom:20px;border-bottom:2px solid #f0fdf4;padd
 header h1{color:var(--dark);font-size:24px;}
 header p{font-size:13px;color:var(--primary);font-weight:700;margin-top:4px;}
 .tabs{display:flex;background:#f0fdf4;border-radius:14px;padding:4px;margin-bottom:24px;}
-.tab{flex:1;padding:10px 6px;border:none;background:transparent;border-radius:10px;cursor:pointer;font-weight:700;font-size:11px;text-transform:uppercase;color:var(--dark);transition:.2s;line-height:1.3;}
+.tab{flex:1;padding:10px 6px;border:none;background:transparent;border-radius:10px;cursor:pointer;font-weight:700;font-size:11px;text-transform:uppercase;color:var(--dark);transition:.2s;line-height:1.3;font-family:inherit;}
 .tab .ti{display:block;font-size:18px;margin-bottom:3px;}
 .tab.active{background:var(--dark);color:#fff;box-shadow:0 4px 12px rgba(6,78,59,.25);}
 .sec{font-weight:700;margin:20px 0 10px;display:block;border-left:4px solid var(--primary);padding-left:10px;color:var(--dark);font-size:12px;text-transform:uppercase;}
@@ -35,11 +35,9 @@ label{display:block;margin-bottom:4px;font-size:12px;font-weight:600;color:var(-
 .icon-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0;text-align:center;}
 .icon-item img{width:40px;height:40px;object-fit:contain;margin-bottom:5px;}
 .icon-item span{display:block;font-size:8px;font-weight:800;color:var(--dark);line-height:1.2;}
-/* Result box */
 .result-box{background:var(--dark);color:#fff;padding:20px;border-radius:14px;text-align:center;margin:18px 0;border-bottom:5px solid var(--primary);}
 .result-value{font-size:34px;font-weight:800;color:var(--primary);margin:6px 0;}
 .result-sub{font-size:9px;opacity:.75;margin-top:5px;font-weight:700;letter-spacing:1px;}
-/* Panel picker */
 .panel-sel{background:rgba(255,255,255,.08);padding:10px;border-radius:10px;margin-top:10px;border:1px solid var(--primary);}
 .panel-sel>label{color:#fff;font-size:10px;margin-bottom:7px;display:block;}
 .panel-picker{display:flex;gap:6px;justify-content:center;}
@@ -48,12 +46,10 @@ label{display:block;margin-bottom:4px;font-size:12px;font-weight:600;color:var(-
 .panel-card img{width:46px;height:46px;object-fit:contain;display:block;margin:0 auto 3px;}
 .panel-card .pn{font-size:8px;font-weight:700;color:#e5e7eb;line-height:1.2;display:block;}
 .panel-card .pw{color:var(--primary);font-size:12px;font-weight:800;display:block;}
-/* Param box */
 .param-box{background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:13px;margin-bottom:14px;}
 .param-box input,.param-box select{background:#fff;border-color:#93c5fd;margin-bottom:0;}
 .param-box label{color:#1e40af;font-size:11px;}
 .param-box .sec{border-left-color:#3b82f6;color:#1e40af;margin-top:0;}
-/* Product cards */
 .prod-section{margin-top:12px;}
 .prod-lbl{font-size:11px;font-weight:700;color:#1e40af;margin-bottom:7px;display:block;}
 .prod-cards{display:flex;gap:6px;flex-wrap:wrap;}
@@ -63,13 +59,11 @@ label{display:block;margin-bottom:4px;font-size:12px;font-weight:600;color:var(-
 .prod-card .pname{font-size:8px;font-weight:700;color:var(--dark);line-height:1.3;display:block;}
 .prod-card .pkwh{font-size:11px;font-weight:800;color:var(--accent);margin:2px 0;display:block;}
 .prod-card .pprice{font-size:8px;color:#6b7280;display:block;}
-/* Result rows */
 .res-row{display:flex;justify-content:space-between;align-items:center;background:#f0fdf4;border-radius:8px;padding:8px 12px;margin-bottom:6px;font-size:12px;}
 .rval{font-weight:800;color:var(--accent);}
 .res-row.blue .rval{color:var(--blue);}
 .res-row.amber .rval{color:var(--amber);}
 .res-row.red .rval{color:var(--red);}
-/* Lead box */
 .lead-box{background:#f0fdf4;padding:16px;border-radius:12px;border:2px solid var(--primary);text-align:center;margin-top:18px;}
 .lead-box h3{font-size:14px;color:var(--dark);font-weight:700;margin-bottom:4px;}
 .lead-desc{font-size:11px;color:var(--accent);font-weight:600;margin-bottom:8px;}
@@ -86,11 +80,9 @@ label{display:block;margin-bottom:4px;font-size:12px;font-weight:600;color:var(-
 .dept-lbl{margin-top:16px;font-size:12px;display:block;}
 .cta-btn{width:100%;background:var(--primary);color:#fff;padding:14px;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;text-transform:uppercase;margin-top:9px;font-family:inherit;}
 .cta-btn:hover{background:var(--accent);}
-/* Kit preview */
 .kit-box{background:var(--dark);border-radius:12px;padding:12px;margin:10px 0;text-align:center;}
 .kit-box img{width:100%;max-width:260px;height:150px;object-fit:contain;display:block;margin:0 auto 7px;}
 .kit-name{font-size:12px;font-weight:800;color:var(--primary);}
-/* Appliance grid */
 .app-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px;}
 .app-card{background:#f9fafb;border:1.5px solid var(--border);border-radius:11px;padding:9px;display:flex;flex-direction:column;align-items:center;gap:5px;transition:border-color .2s,box-shadow .2s;}
 .app-card.has-val{border-color:var(--primary);box-shadow:0 0 0 2px rgba(16,185,129,.15);}
@@ -110,7 +102,7 @@ label{display:block;margin-bottom:4px;font-size:12px;font-weight:600;color:var(-
 
 <div class="top-bar">CABO SAN LUCAS • SAN JOSÉ DEL CABO • LA PAZ, BCS, MX</div>
 <div class="hero-container">
-  <img src="hero.png" alt="Baja Pro-Services" class="hero-image">
+  <img src="hero.png" alt="Baja Pro-Services" class="hero-image" onerror="this.style.display='none'">
 </div>
 
 <div class="wrap">
@@ -131,7 +123,7 @@ label{display:block;margin-bottom:4px;font-size:12px;font-weight:600;color:var(-
   <input type="tel" id="telefono" required>
   <input type="text" id="direccion" required>
 
-  <!-- ══════════════════════ INTERCONECTADO ══════════════════════ -->
+  <!-- INTERCONECTADO -->
   <div id="calc-i" class="calc-section show">
     <span class="sec" id="sec-uso-i"></span>
     <select id="tarifa-i" onchange="toggleKwh('i')">
@@ -177,15 +169,12 @@ label{display:block;margin-bottom:4px;font-size:12px;font-weight:600;color:var(-
     <div class="result-box">
       <div id="i-res-ttl"></div>
       <div class="result-value"><span id="i-panels">0</span> <span id="i-panels-lbl"></span></div>
-      <div class="panel-sel">
-        <label id="i-ptype-lbl"></label>
-        <div class="panel-picker" id="i-panel-picker"></div>
-      </div>
+      <div class="panel-sel"><label id="i-ptype-lbl"></label><div class="panel-picker" id="i-panel-picker"></div></div>
       <div class="result-sub">ZONA BCS | 6.19 HSP | EFF 85%</div>
     </div>
     <div id="i-lead" class="hidden">
       <div id="i-kit-box" class="kit-box hidden">
-        <img id="i-kit-img" src="" alt="Kit">
+        <img id="i-kit-img" src="" alt="Kit" onerror="this.style.display='none'">
         <div class="kit-name" id="i-kit-name"></div>
       </div>
       <div class="lead-box">
@@ -210,7 +199,7 @@ label{display:block;margin-bottom:4px;font-size:12px;font-weight:600;color:var(-
     </div>
   </div>
 
-  <!-- ══════════════════════ HÍBRIDO ══════════════════════ -->
+  <!-- HÍBRIDO -->
   <div id="calc-h" class="calc-section">
     <span class="sec" id="sec-uso-h"></span>
     <select id="tarifa-h" onchange="toggleKwh('h')">
@@ -252,10 +241,7 @@ label{display:block;margin-bottom:4px;font-size:12px;font-weight:600;color:var(-
     <div class="result-box">
       <div id="h-res-ttl"></div>
       <div class="result-value"><span id="h-panels">0</span> <span id="h-panels-lbl"></span></div>
-      <div class="panel-sel">
-        <label id="h-ptype-lbl"></label>
-        <div class="panel-picker" id="h-panel-picker"></div>
-      </div>
+      <div class="panel-sel"><label id="h-ptype-lbl"></label><div class="panel-picker" id="h-panel-picker"></div></div>
       <div class="result-sub">ZONA BCS | 6.19 HSP | EFF 85%</div>
     </div>
     <div id="h-rows" class="hidden">
@@ -267,7 +253,7 @@ label{display:block;margin-bottom:4px;font-size:12px;font-weight:600;color:var(-
     </div>
     <div id="h-lead" class="hidden">
       <div id="h-kit-box" class="kit-box hidden">
-        <img id="h-kit-img" src="" alt="Kit">
+        <img id="h-kit-img" src="" alt="Kit" onerror="this.style.display='none'">
         <div class="kit-name" id="h-kit-name"></div>
       </div>
       <div class="lead-box">
@@ -292,7 +278,7 @@ label{display:block;margin-bottom:4px;font-size:12px;font-weight:600;color:var(-
     </div>
   </div>
 
-  <!-- ══════════════════════ AISLADO ══════════════════════ -->
+  <!-- AISLADO -->
   <div id="calc-a" class="calc-section">
     <span class="sec" id="sec-app-a"></span>
     <p style="font-size:11px;color:#6b7280;margin-bottom:11px;" id="a-hint"></p>
@@ -310,10 +296,7 @@ label{display:block;margin-bottom:4px;font-size:12px;font-weight:600;color:var(-
     <div class="result-box">
       <div id="a-res-ttl"></div>
       <div class="result-value"><span id="a-panels">0</span> <span id="a-panels-lbl"></span></div>
-      <div class="panel-sel">
-        <label id="a-ptype-lbl"></label>
-        <div class="panel-picker" id="a-panel-picker"></div>
-      </div>
+      <div class="panel-sel"><label id="a-ptype-lbl"></label><div class="panel-picker" id="a-panel-picker"></div></div>
       <div class="result-sub">ZONA BCS | 6.19 HSP | EFF 85%</div>
     </div>
     <div id="a-rows" class="hidden">
@@ -342,22 +325,12 @@ label{display:block;margin-bottom:4px;font-size:12px;font-weight:600;color:var(-
 </div>
 
 <script>
-// ══════════════════════════════════════════════════════════
-// CONSTANTS
-// ══════════════════════════════════════════════════════════
 const HSP=6.19,EFF=0.85,DSCTO=0.10;
 const CFE={basico:{lim:150,p:1.04},intermedio:{lim:130,p:1.27},excedente:{p:3.73},dac:{umbral:500,p:6.75},iva:0.16};
-const SISTEMAS={
-  3:{kw:3,pan:7, inv:'3kW', precio:57200},
-  4:{kw:4,pan:9, inv:'4kW', precio:76260},
-  5:{kw:5,pan:12,inv:'5kW', precio:95300},
-  6:{kw:6,pan:14,inv:'6kW', precio:114400},
-  7:{kw:7,pan:16,inv:'7kW', precio:133462},
-  8:{kw:8,pan:18,inv:'8kW', precio:152528},
-};
+const SISTEMAS={3:{kw:3,pan:7,inv:'3kW',precio:57200},4:{kw:4,pan:9,inv:'4kW',precio:76260},5:{kw:5,pan:12,inv:'5kW',precio:95300},6:{kw:6,pan:14,inv:'6kW',precio:114400},7:{kw:7,pan:16,inv:'7kW',precio:133462},8:{kw:8,pan:18,inv:'8kW',precio:152528}};
 const PANELES=[
-  {id:'p450',w:450,img:'EPL450M144-p.png',    model:'EPL450M144'},
-  {id:'p540',w:540,img:'EPL540M144-p.png',    model:'EPL540M144'},
+  {id:'p450',w:450,img:'EPL450M144-p.png',model:'EPL450M144'},
+  {id:'p540',w:540,img:'EPL540M144-p.png',model:'EPL540M144'},
   {id:'p700',w:700,img:'LP210210M66NB700W-p.png',model:'LP210M 700W'},
 ];
 const BATERIAS=[
@@ -371,21 +344,18 @@ const BATERIAS=[
   {id:'epcom48', kwh:4.8, es:'Epcom RLB 48V MAX',   en:'Epcom RLB 48V MAX',   img:'RLB10048MAX-p.png',                    precio:23000},
 ];
 const INVERSORES=[
-  {id:'solark8',  kw:8,  es:'Sol-Ark 8K 48V',        en:'Sol-Ark 8K 48V',        img:'8Kw_48V_SOL-ARK.png',              precio:42000},
-  {id:'solark12', kw:12, es:'Sol-Ark 12K',            en:'Sol-Ark 12K',           img:'12K2P-p-SOL-ARK.png',              precio:68000},
-  {id:'solark15', kw:15, es:'Sol-Ark 15K',            en:'Sol-Ark 15K',           img:'Sol-Ark_15Kw_48V-220VCA.png',      precio:85000},
-  {id:'solark30', kw:30, es:'Sol-Ark 30K 3F',         en:'Sol-Ark 30K 3-Phase',   img:'Sol-Ark_30Kw_3P.png',              precio:145000},
-  {id:'must8',    kw:8,  es:'Must 8kW 48V',           en:'Must 8kW 48V',          img:'Must-8Kw-48V-220VCA.png',           precio:35000},
-  {id:'lux12',    kw:12, es:'Lux Power 12kW',         en:'Lux Power 12kW',        img:'Lux_Power_12Kw_3LiFePO4-15Kw.png', precio:72000},
-  {id:'grow3k',   kw:3,  es:'Growatt SPF3000 48V',    en:'Growatt SPF3000 48V',   img:'SPF3000TLLVM48P-p.png',             precio:18000},
-  {id:'grow3kes', kw:3,  es:'Growatt SPF3000 110V',   en:'Growatt SPF3000 110V',  img:'SPF3000TLLVMES-Growatt_48V_110v.png',precio:17500},
-  {id:'grow6k',   kw:6,  es:'Growatt SPF6000 48V',    en:'Growatt SPF6000 48V',   img:'SPF6000TDVMG2-p.png',               precio:28000},
+  {id:'solark8',  kw:8,  es:'Sol-Ark 8K 48V',       en:'Sol-Ark 8K 48V',       img:'8Kw_48V_SOL-ARK.png',                  precio:42000},
+  {id:'solark12', kw:12, es:'Sol-Ark 12K',           en:'Sol-Ark 12K',          img:'12K2P-p-SOL-ARK.png',                  precio:68000},
+  {id:'solark15', kw:15, es:'Sol-Ark 15K',           en:'Sol-Ark 15K',          img:'Sol-Ark_15Kw_48V-220VCA.png',          precio:85000},
+  {id:'solark30', kw:30, es:'Sol-Ark 30K 3F',        en:'Sol-Ark 30K 3-Phase',  img:'Sol-Ark_30Kw_3P.png',                  precio:145000},
+  {id:'must8',    kw:8,  es:'Must 8kW 48V',          en:'Must 8kW 48V',         img:'Must-8Kw-48V-220VCA.png',              precio:35000},
+  {id:'lux12',    kw:12, es:'Lux Power 12kW',        en:'Lux Power 12kW',       img:'Lux_Power_12Kw_3LiFePO4-15Kw.png',    precio:72000},
+  {id:'grow3k',   kw:3,  es:'Growatt SPF3000 48V',   en:'Growatt SPF3000 48V',  img:'SPF3000TLLVM48P-p.png',                precio:18000},
+  {id:'grow3kes', kw:3,  es:'Growatt SPF3000 110V',  en:'Growatt SPF3000 110V', img:'SPF3000TLLVMES-Growatt_48V_110v.png',  precio:17500},
+  {id:'grow6k',   kw:6,  es:'Growatt SPF6000 48V',   en:'Growatt SPF6000 48V',  img:'SPF6000TDVMG2-p.png',                  precio:28000},
 ];
 const KITS_I={8:{img:'KIT8PVEKTOR8R-p.png',es:'Kit Grid-Tied 8kW Ektor',en:'8kW Grid-Tied Kit Ektor'}};
-const KITS_H={
-  8: {img:'KITHYBRID8KSOL-h.png',         es:'Kit Híbrido 8K Sol-Ark',       en:'Sol-Ark 8K Hybrid Kit'},
-  15:{img:'Sol-Ark_15Kw_4LiFePO4_20Kw.png',es:'Kit Híbrido 15K Sol-Ark 20kWh',en:'Sol-Ark 15K Hybrid Kit 20kWh'},
-};
+const KITS_H={8:{img:'KITHYBRID8KSOL-h.png',es:'Kit Híbrido 8K Sol-Ark',en:'Sol-Ark 8K Hybrid Kit'},15:{img:'Sol-Ark_15Kw_4LiFePO4_20Kw.png',es:'Kit Híbrido 15K Sol-Ark 20kWh',en:'Sol-Ark 15K Hybrid Kit 20kWh'}};
 const CARGAS=[
   {id:'ms1', es:'Mini Split 1 Ton',         en:'1-Ton Mini Split',      w:900, img:'mini_split_1_ton.png'},
   {id:'ms15',es:'Mini Split 1.5 Ton',        en:'1.5-Ton Mini Split',    w:1300,img:'mini_splt_1_5_ton.png'},
@@ -413,180 +383,33 @@ const CARGAS=[
   {id:'sca', es:'Secadora de Cabello',       en:'Hair Dryer',             w:1800,img:'secadora_de_cabello.png'},
   {id:'ev',  es:'Cargador Auto Eléctrico',   en:'EV Charger',             w:7400,img:'cargador_de_auto_electrico.png'},
 ];
-
-// ══════════════════════════════════════════════════════════
-// TRANSLATIONS
-// ══════════════════════════════════════════════════════════
 const TX={
-  es:{
-    tagline:'Energía Solar de Alta Eficiencia',
-    tab_i:'INTERCONECTADO',tab_h:'HÍBRIDO',tab_a:'AISLADO',
-    sc:'Información del Cliente',ph_n:'Nombre completo',ph_t:'WhatsApp',ph_d:'Ubicación',
-    su:'Consumo (kWh)',obi:'Residencial (Bimestral)',ome:'Comercial (Mensual)',
-    sc2:'Certificaciones y Calidad',
-    c1:'Instalación de Sistemas Fotovoltaicos (PFVI).',c2:'Supervisión de Instalaciones (IPV).',
-    cyc:'CICLOS',yrs:'AÑOS',
-    res:'SISTEMA SUGERIDO:',plbl:'PANELES',ptyp:'SELECCIONA PANEL:',
-    ltl:'⚡ Tu sistema recomendado',iiva:'Inst+IVA incl',slbl:'Tengo cupón 10% en app SUMA',
-    blbl:'Tu recibo CFE estimado actual:',svlbl:(s)=>`Con solar: $0/mes → Ahorras $${s}/mes`,
-    wabtn:'Enviar por WhatsApp y recibir cotización gratis',
-    cnt:'Un asesor te contacta hoy mismo. Sin compromiso.<br><strong>WhatsApp Ventas: +52 1 612 219 8325</strong> | <strong>Servicio Técnico: +52 1 612 167 3200</strong><br><strong>servicesbajapro@gmail.com</strong>',
-    dlbl:'Enviar a departamento:',osl:'VENTAS',otl:'SERVICIO TÉCNICO',cta:'SOLICITAR COTIZACIÓN',pm:'/mes',
-    alrt:'Por favor ingrese sus datos y consumo.',
-    sbt:'Parámetros de Batería & Respaldo',hhrs:'Horas Respaldo',hdod:'DoD Batería %',hvolt:'Voltaje Banco',
-    hbatsel:'Selecciona tu batería:',hinvsel:'Selecciona tu inversor híbrido:',
-    hbat:'Banco de Baterías (kWh):',hbn:'Baterías sugeridas:',hbu:'unidades',
-    hinv:'Inversor Híbrido sugerido:',hrec:'Recibo CFE actual:',haho:'Ahorro mensual:',
-    hltl:'🔋 Tu sistema Híbrido recomendado',
-    sap:'Consumo de Electrodomésticos',ahnt:'Ingresa unidades y horas de uso diario de cada equipo.',
-    apu:'Uds',aph:'Hrs/día',spr:'Parámetros del Sistema',
-    adas:'Días Autonomía',adod:'DoD Batería %',avlt:'Voltaje Banco',
-    abatsel:'Selecciona tu batería:',ainvsel:'Selecciona tu inversor:',
-    adem:'Demanda diaria total:',abat:'Banco de Baterías:',abn:'Baterías sugeridas:',abu:'unidades',
-    ainv:'Inversor Off-Grid:',altl:'☀️ Tu sistema Aislado recomendado',
-    wgi:'Hola Baja Pro-Services, usé la calculadora INTERCONECTADO:',
-    wgh:'Hola Baja Pro-Services, usé la calculadora HÍBRIDO:',
-    wga:'Hola Baja Pro-Services, usé la calculadora AISLADO:',
-    wbi:'bimestral',wme:'mensual',wsu:'%0A🎟️ Presentaré cupón SUMA -10%',
-    wfr:'Quiero cotización formal gratis. Mi nombre es',
-  },
-  en:{
-    tagline:'High-Efficiency Solar Energy',
-    tab_i:'GRID-TIED',tab_h:'HYBRID',tab_a:'OFF-GRID',
-    sc:'Client Information',ph_n:'Full name',ph_t:'WhatsApp',ph_d:'Location',
-    su:'Consumption (kWh)',obi:'Residential (Bi-monthly)',ome:'Commercial (Monthly)',
-    sc2:'Certifications & Quality',
-    c1:'Photovoltaic System Installation (PFVI).',c2:'Installation Supervision (IPV).',
-    cyc:'CYCLES',yrs:'YEARS',
-    res:'SUGGESTED SYSTEM:',plbl:'PANELS',ptyp:'SELECT PANEL:',
-    ltl:'⚡ Your recommended system',iiva:'Install+TAX incl',slbl:'I have 10% SUMA app coupon',
-    blbl:'Your estimated current CFE bill:',svlbl:(s)=>`With solar: $0/mo → You save $${s}/mo`,
-    wabtn:'Send via WhatsApp & get free quote',
-    cnt:'An advisor will contact you today. No commitment.<br><strong>Sales WhatsApp: +52 1 612 219 8325</strong> | <strong>Tech Support: +52 1 612 167 3200</strong><br><strong>servicesbajapro@gmail.com</strong>',
-    dlbl:'Send to department:',osl:'SALES',otl:'TECHNICAL SUPPORT',cta:'REQUEST QUOTE',pm:'/mo',
-    alrt:'Please enter your information and consumption.',
-    sbt:'Battery & Backup Parameters',hhrs:'Backup Hours',hdod:'Battery DoD %',hvolt:'Bank Voltage',
-    hbatsel:'Select your battery:',hinvsel:'Select your hybrid inverter:',
-    hbat:'Battery Bank (kWh):',hbn:'Suggested batteries:',hbu:'units',
-    hinv:'Suggested Hybrid Inverter:',hrec:'Current CFE bill:',haho:'Monthly savings:',
-    hltl:'🔋 Your recommended Hybrid system',
-    sap:'Appliance Consumption',ahnt:'Enter units and daily hours of use for each appliance.',
-    apu:'Units',aph:'Hrs/day',spr:'System Parameters',
-    adas:'Autonomy Days',adod:'Battery DoD %',avlt:'Bank Voltage',
-    abatsel:'Select your battery:',ainvsel:'Select your inverter:',
-    adem:'Total daily demand:',abat:'Required battery bank:',abn:'Suggested batteries:',abu:'units',
-    ainv:'Off-Grid Inverter:',altl:'☀️ Your recommended Off-Grid system',
-    wgi:'Hi Baja Pro-Services, I used the GRID-TIED calculator:',
-    wgh:'Hi Baja Pro-Services, I used the HYBRID calculator:',
-    wga:'Hi Baja Pro-Services, I used the OFF-GRID calculator:',
-    wbi:'bi-monthly',wme:'monthly',wsu:'%0A🎟️ I will present SUMA coupon -10%',
-    wfr:'I want a free formal quote. My name is',
-  }
+  es:{tagline:'Energía Solar de Alta Eficiencia',tab_i:'INTERCONECTADO',tab_h:'HÍBRIDO',tab_a:'AISLADO',sc:'Información del Cliente',ph_n:'Nombre completo',ph_t:'WhatsApp',ph_d:'Ubicación',su:'Consumo (kWh)',obi:'Residencial (Bimestral)',ome:'Comercial (Mensual)',sc2:'Certificaciones y Calidad',c1:'Instalación de Sistemas Fotovoltaicos (PFVI).',c2:'Supervisión de Instalaciones (IPV).',cyc:'CICLOS',yrs:'AÑOS',res:'SISTEMA SUGERIDO:',plbl:'PANELES',ptyp:'SELECCIONA PANEL:',ltl:'⚡ Tu sistema recomendado',iiva:'Inst+IVA incl',slbl:'Tengo cupón 10% en app SUMA',blbl:'Tu recibo CFE estimado actual:',svlbl:(s)=>`Con solar: $0/mes → Ahorras $${s}/mes`,wabtn:'Enviar por WhatsApp y recibir cotización gratis',cnt:'Un asesor te contacta hoy mismo. Sin compromiso.<br><strong>WhatsApp Ventas: +52 1 612 219 8325</strong> | <strong>Servicio Técnico: +52 1 612 167 3200</strong><br><strong>servicesbajapro@gmail.com</strong>',dlbl:'Enviar a departamento:',osl:'VENTAS',otl:'SERVICIO TÉCNICO',cta:'SOLICITAR COTIZACIÓN',pm:'/mes',alrt:'Por favor ingrese sus datos y consumo.',sbt:'Parámetros de Batería & Respaldo',hhrs:'Horas Respaldo',hdod:'DoD Batería %',hvolt:'Voltaje Banco',hbatsel:'Selecciona tu batería:',hinvsel:'Selecciona tu inversor híbrido:',hbat:'Banco de Baterías (kWh):',hbn:'Baterías sugeridas:',hbu:'unidades',hinv:'Inversor Híbrido sugerido:',hrec:'Recibo CFE actual:',haho:'Ahorro mensual:',hltl:'🔋 Tu sistema Híbrido recomendado',sap:'Consumo de Electrodomésticos',ahnt:'Ingresa unidades y horas de uso diario de cada equipo.',apu:'Uds',aph:'Hrs/día',spr:'Parámetros del Sistema',adas:'Días Autonomía',adod:'DoD Batería %',avlt:'Voltaje Banco',abatsel:'Selecciona tu batería:',ainvsel:'Selecciona tu inversor:',adem:'Demanda diaria total:',abat:'Banco de Baterías:',abn:'Baterías sugeridas:',abu:'unidades',ainv:'Inversor Off-Grid:',altl:'☀️ Tu sistema Aislado recomendado',wgi:'Hola Baja Pro-Services, usé la calculadora INTERCONECTADO:',wgh:'Hola Baja Pro-Services, usé la calculadora HÍBRIDO:',wga:'Hola Baja Pro-Services, usé la calculadora AISLADO:',wbi:'bimestral',wme:'mensual',wsu:'%0A🎟️ Presentaré cupón SUMA -10%',wfr:'Quiero cotización formal gratis. Mi nombre es'},
+  en:{tagline:'High-Efficiency Solar Energy',tab_i:'GRID-TIED',tab_h:'HYBRID',tab_a:'OFF-GRID',sc:'Client Information',ph_n:'Full name',ph_t:'WhatsApp',ph_d:'Location',su:'Consumption (kWh)',obi:'Residential (Bi-monthly)',ome:'Commercial (Monthly)',sc2:'Certifications & Quality',c1:'Photovoltaic System Installation (PFVI).',c2:'Installation Supervision (IPV).',cyc:'CYCLES',yrs:'YEARS',res:'SUGGESTED SYSTEM:',plbl:'PANELS',ptyp:'SELECT PANEL:',ltl:'⚡ Your recommended system',iiva:'Install+TAX incl',slbl:'I have 10% SUMA app coupon',blbl:'Your estimated current CFE bill:',svlbl:(s)=>`With solar: $0/mo → You save $${s}/mo`,wabtn:'Send via WhatsApp & get free quote',cnt:'An advisor will contact you today. No commitment.<br><strong>Sales WhatsApp: +52 1 612 219 8325</strong> | <strong>Tech Support: +52 1 612 167 3200</strong><br><strong>servicesbajapro@gmail.com</strong>',dlbl:'Send to department:',osl:'SALES',otl:'TECHNICAL SUPPORT',cta:'REQUEST QUOTE',pm:'/mo',alrt:'Please enter your information and consumption.',sbt:'Battery & Backup Parameters',hhrs:'Backup Hours',hdod:'Battery DoD %',hvolt:'Bank Voltage',hbatsel:'Select your battery:',hinvsel:'Select your hybrid inverter:',hbat:'Battery Bank (kWh):',hbn:'Suggested batteries:',hbu:'units',hinv:'Suggested Hybrid Inverter:',hrec:'Current CFE bill:',haho:'Monthly savings:',hltl:'🔋 Your recommended Hybrid system',sap:'Appliance Consumption',ahnt:'Enter units and daily hours of use for each appliance.',apu:'Units',aph:'Hrs/day',spr:'System Parameters',adas:'Autonomy Days',adod:'Battery DoD %',avlt:'Bank Voltage',abatsel:'Select your battery:',ainvsel:'Select your inverter:',adem:'Total daily demand:',abat:'Required battery bank:',abn:'Suggested batteries:',abu:'units',ainv:'Off-Grid Inverter:',altl:'☀️ Your recommended Off-Grid system',wgi:'Hi Baja Pro-Services, I used the GRID-TIED calculator:',wgh:'Hi Baja Pro-Services, I used the HYBRID calculator:',wga:'Hi Baja Pro-Services, I used the OFF-GRID calculator:',wbi:'bi-monthly',wme:'monthly',wsu:'%0A🎟️ I will present SUMA coupon -10%',wfr:'I want a free formal quote. My name is'}
 };
-
-// ══════════════════════════════════════════════════════════
-// STATE
-// ══════════════════════════════════════════════════════════
-let lang='es', mode='i';
-let selPanel={i:'p450',h:'p450',a:'p450'};
-let selBat={h:'pytes51',a:'pytes51'};
-let selInv={h:'solark8',a:'solark8'};
+let lang='es',mode='i';
+let selPanel={i:'p450',h:'p450',a:'p450'},selBat={h:'pytes51',a:'pytes51'},selInv={h:'solark8',a:'solark8'};
 const t=k=>TX[lang][k]||'';
 const fmt=n=>Number(n).toLocaleString('es-MX');
-
-// ══════════════════════════════════════════════════════════
-// DOM HELPERS
-// ══════════════════════════════════════════════════════════
-function s(id,txt){const el=document.getElementById(id);if(el)el.innerText=txt;}
-function sh(id,html){const el=document.getElementById(id);if(el)el.innerHTML=html;}
-
-// ══════════════════════════════════════════════════════════
-// CALCULATIONS
-// ══════════════════════════════════════════════════════════
-function cfe(kwh){
-  let c=0,r=kwh;
-  if(kwh>CFE.dac.umbral){c=kwh*CFE.dac.p;}
-  else{const b=Math.min(r,CFE.basico.lim);c+=b*CFE.basico.p;r-=b;if(r>0){const i=Math.min(r,CFE.intermedio.lim);c+=i*CFE.intermedio.p;r-=i;}if(r>0)c+=r*CFE.excedente.p;}
-  return Math.round(c*(1+CFE.iva));
-}
+function s(id,v){const e=document.getElementById(id);if(e)e.innerText=v;}
+function sh(id,v){const e=document.getElementById(id);if(e)e.innerHTML=v;}
+function cfe(kwh){let c=0,r=kwh;if(kwh>CFE.dac.umbral){c=kwh*CFE.dac.p;}else{const b=Math.min(r,CFE.basico.lim);c+=b*CFE.basico.p;r-=b;if(r>0){const i=Math.min(r,CFE.intermedio.lim);c+=i*CFE.intermedio.p;r-=i;}if(r>0)c+=r*CFE.excedente.p;}return Math.round(c*(1+CFE.iva));}
 function getSist(kwN){const ks=Object.keys(SISTEMAS).map(Number).sort((a,b)=>a-b);const k=ks.find(k=>k>=kwN)||8;return{...SISTEMAS[k]};}
 function getPanel(c){return PANELES.find(p=>p.id===selPanel[c])||PANELES[0];}
 function getBat(c){return BATERIAS.find(b=>b.id===selBat[c])||BATERIAS[0];}
 function getInv(c){return INVERSORES.find(v=>v.id===selInv[c])||INVERSORES[0];}
-function readKwh(p){
-  const bi=document.getElementById('tarifa-'+p).value==='bi';
-  const sel=p==='i'?(bi?'.ki':'.kim'):(bi?'.kh':'.khm');
-  let tot=0,cnt=0;
-  document.querySelectorAll(sel).forEach(el=>{const v=Number(el.value);if(v>0){tot+=v;cnt++;}});
-  const avg=cnt>0?Math.round(tot/cnt):0;
-  return{avg,men:avg*(bi?0.5:1),bi};
-}
-function getPanelCount(men,w){const d=men/30.4;return Math.ceil(((d/HSP)/EFF*1000)/w);}
-function setPrecio(wid,base,suma){
-  const p=suma?Math.round(base*(1-DSCTO)):base;
-  const el=document.getElementById(wid);if(!el)return p;
-  el.innerHTML=suma?`<span class="tachado">$${fmt(base)}</span> <strong style="color:var(--accent)">$${fmt(p)}</strong> <span class="suma-badge">-10% SUMA</span>`:`<strong>$${fmt(p)}</strong>`;
-  return p;
-}
-
-// ══════════════════════════════════════════════════════════
-// UI BUILDERS
-// ══════════════════════════════════════════════════════════
-function buildPanelPickers(){
-  ['i','h','a'].forEach(calc=>{
-    const c=document.getElementById(calc+'-panel-picker');if(!c)return;
-    c.innerHTML=PANELES.map(p=>`<div class="panel-card${selPanel[calc]===p.id?' active':''}" onclick="selectPanel('${calc}','${p.id}')"><img src="${p.img}" alt="${p.model}" onerror="this.style.display='none'"><span class="pn">${p.model}</span><span class="pw">${p.w}W</span></div>`).join('');
-  });
-}
-function buildBatCards(calc){
-  const c=document.getElementById(calc+'-bat-cards');if(!c)return;
-  c.innerHTML=BATERIAS.map(b=>`<div class="prod-card${selBat[calc]===b.id?' active':''}" onclick="selectBat('${calc}','${b.id}')"><img src="${b.img}" alt="${lang==='es'?b.es:b.en}" onerror="this.style.display='none'"><span class="pname">${lang==='es'?b.es:b.en}</span><span class="pkwh">${b.kwh}kWh</span><span class="pprice">$${fmt(b.precio)}</span></div>`).join('');
-}
-function buildInvCards(calc){
-  const c=document.getElementById(calc+'-inv-cards');if(!c)return;
-  c.innerHTML=INVERSORES.map(v=>`<div class="prod-card${selInv[calc]===v.id?' active':''}" onclick="selectInv('${calc}','${v.id}')"><img src="${v.img}" alt="${lang==='es'?v.es:v.en}" onerror="this.style.display='none'"><span class="pname">${lang==='es'?v.es:v.en}</span><span class="pkwh">${v.kw}kW</span><span class="pprice">$${fmt(v.precio)}</span></div>`).join('');
-}
-function buildAppGrid(){
-  const grid=document.getElementById('a-app-grid');
-  const prev={};
-  CARGAS.forEach(c=>{const u=document.getElementById('au-'+c.id);const h=document.getElementById('ah-'+c.id);if(u)prev['u'+c.id]=u.value;if(h)prev['h'+c.id]=h.value;});
-  grid.innerHTML='';
-  CARGAS.forEach(c=>{
-    const nm=lang==='es'?c.es:c.en;
-    const uv=prev['u'+c.id]||'0';const hv=prev['h'+c.id]||'0';
-    grid.innerHTML+=`<div class="app-card${(Number(uv)>0&&Number(hv)>0)?' has-val':''}" id="ac-${c.id}">
-      <img class="app-img" src="${c.img}" alt="${nm}" onerror="this.style.display='none'">
-      <div class="app-name">${nm}</div><div class="app-watts">${c.w}W</div>
-      <div class="app-row">
-        <div><label>${t('apu')}</label><input type="number" id="au-${c.id}" value="${uv}" min="0" max="20" oninput="onApp('${c.id}')"></div>
-        <div><label>${t('aph')}</label><input type="number" id="ah-${c.id}" value="${hv}" min="0" max="24" step="0.5" oninput="onApp('${c.id}')"></div>
-      </div></div>`;
-  });
-}
-function onApp(id){
-  const card=document.getElementById('ac-'+id);
-  const u=Number(document.getElementById('au-'+id)?.value||0);
-  const h=Number(document.getElementById('ah-'+id)?.value||0);
-  if(card)card.classList.toggle('has-val',u>0&&h>0);
-  calcA();
-}
-function showKit(calc,kw,kits){
-  const box=document.getElementById(calc+'-kit-box');if(!box)return;
-  const kit=kits[kw];
-  if(kit){document.getElementById(calc+'-kit-img').src=kit.img;s(calc+'-kit-name',lang==='es'?kit.es:kit.en);box.classList.remove('hidden');}
-  else box.classList.add('hidden');
-}
-
-// ══════════════════════════════════════════════════════════
-// SELECTION
-// ══════════════════════════════════════════════════════════
+function readKwh(p){const bi=document.getElementById('tarifa-'+p).value==='bi';const sel=p==='i'?(bi?'.ki':'.kim'):(bi?'.kh':'.khm');let tot=0,cnt=0;document.querySelectorAll(sel).forEach(el=>{const v=Number(el.value);if(v>0){tot+=v;cnt++;}});const avg=cnt>0?Math.round(tot/cnt):0;return{avg,men:avg*(bi?0.5:1),bi};}
+function getPanelCount(men,w){return Math.ceil(((men/30.4/HSP)/EFF*1000)/w);}
+function setPrecio(wid,base,suma){const p=suma?Math.round(base*(1-DSCTO)):base;const el=document.getElementById(wid);if(!el)return p;el.innerHTML=suma?`<span class="tachado">$${fmt(base)}</span> <strong style="color:var(--accent)">$${fmt(p)}</strong> <span class="suma-badge">-10% SUMA</span>`:`<strong>$${fmt(p)}</strong>`;return p;}
+function buildPanelPickers(){['i','h','a'].forEach(calc=>{const c=document.getElementById(calc+'-panel-picker');if(!c)return;c.innerHTML=PANELES.map(p=>`<div class="panel-card${selPanel[calc]===p.id?' active':''}" onclick="selectPanel('${calc}','${p.id}')"><img src="${p.img}" alt="${p.model}" onerror="this.style.display='none'"><span class="pn">${p.model}</span><span class="pw">${p.w}W</span></div>`).join('');});}
+function buildBatCards(calc){const c=document.getElementById(calc+'-bat-cards');if(!c)return;c.innerHTML=BATERIAS.map(b=>`<div class="prod-card${selBat[calc]===b.id?' active':''}" onclick="selectBat('${calc}','${b.id}')"><img src="${b.img}" alt="${lang==='es'?b.es:b.en}" onerror="this.style.display='none'"><span class="pname">${lang==='es'?b.es:b.en}</span><span class="pkwh">${b.kwh}kWh</span><span class="pprice">$${fmt(b.precio)}</span></div>`).join('');}
+function buildInvCards(calc){const c=document.getElementById(calc+'-inv-cards');if(!c)return;c.innerHTML=INVERSORES.map(v=>`<div class="prod-card${selInv[calc]===v.id?' active':''}" onclick="selectInv('${calc}','${v.id}')"><img src="${v.img}" alt="${lang==='es'?v.es:v.en}" onerror="this.style.display='none'"><span class="pname">${lang==='es'?v.es:v.en}</span><span class="pkwh">${v.kw}kW</span><span class="pprice">$${fmt(v.precio)}</span></div>`).join('');}
+function buildAppGrid(){const grid=document.getElementById('a-app-grid');const prev={};CARGAS.forEach(c=>{const u=document.getElementById('au-'+c.id);const h=document.getElementById('ah-'+c.id);if(u)prev['u'+c.id]=u.value;if(h)prev['h'+c.id]=h.value;});grid.innerHTML='';CARGAS.forEach(c=>{const nm=lang==='es'?c.es:c.en;const uv=prev['u'+c.id]||'0';const hv=prev['h'+c.id]||'0';grid.innerHTML+=`<div class="app-card${(Number(uv)>0&&Number(hv)>0)?' has-val':''}" id="ac-${c.id}"><img class="app-img" src="${c.img}" alt="${nm}" onerror="this.style.display='none'"><div class="app-name">${nm}</div><div class="app-watts">${c.w}W</div><div class="app-row"><div><label>${t('apu')}</label><input type="number" id="au-${c.id}" value="${uv}" min="0" max="20" oninput="onApp('${c.id}')"></div><div><label>${t('aph')}</label><input type="number" id="ah-${c.id}" value="${hv}" min="0" max="24" step="0.5" oninput="onApp('${c.id}')"></div></div></div>`;});}
+function onApp(id){const card=document.getElementById('ac-'+id);const u=Number(document.getElementById('au-'+id)?.value||0);const h=Number(document.getElementById('ah-'+id)?.value||0);if(card)card.classList.toggle('has-val',u>0&&h>0);calcA();}
+function showKit(calc,kw,kits){const box=document.getElementById(calc+'-kit-box');if(!box)return;const kit=kits[kw];if(kit){document.getElementById(calc+'-kit-img').src=kit.img;s(calc+'-kit-name',lang==='es'?kit.es:kit.en);box.classList.remove('hidden');}else box.classList.add('hidden');}
 function selectPanel(calc,id){selPanel[calc]=id;buildPanelPickers();if(calc==='i')calcI();else if(calc==='h')calcH();else calcA();}
 function selectBat(calc,id){selBat[calc]=id;buildBatCards(calc);if(calc==='h')calcH();else calcA();}
 function selectInv(calc,id){selInv[calc]=id;buildInvCards(calc);if(calc==='h')calcH();else calcA();}
-
-// ══════════════════════════════════════════════════════════
-// MODE / LANG
-// ══════════════════════════════════════════════════════════
 function setMode(m){mode=m;['i','h','a'].forEach(x=>{document.getElementById('tab-'+x).classList.toggle('active',x===m);document.getElementById('calc-'+x).classList.toggle('show',x===m);});}
 function toggleKwh(p){const bi=document.getElementById('tarifa-'+p).value==='bi';document.getElementById('grid-bi-'+p).classList.toggle('hidden',!bi);document.getElementById('grid-me-'+p).classList.toggle('hidden',bi);if(p==='i')calcI();else calcH();}
 function setLang(l){lang=l;document.getElementById('btn-es').classList.toggle('active',l==='es');document.getElementById('btn-en').classList.toggle('active',l==='en');applyLang();buildPanelPickers();buildBatCards('h');buildInvCards('h');buildBatCards('a');buildInvCards('a');buildAppGrid();calcI();calcH();calcA();}
@@ -594,144 +417,25 @@ function applyLang(){
   s('tagline',t('tagline'));s('tab-i-lbl',t('tab_i'));s('tab-h-lbl',t('tab_h'));s('tab-a-lbl',t('tab_a'));
   s('sec-client',t('sc'));document.getElementById('nombre').placeholder=t('ph_n');document.getElementById('telefono').placeholder=t('ph_t');document.getElementById('direccion').placeholder=t('ph_d');
   document.querySelectorAll('.tc').forEach(e=>e.innerText=t('cyc'));document.querySelectorAll('.ty').forEach(e=>e.innerText=t('yrs'));
-  // Interconectado
   s('sec-uso-i',t('su'));s('opt-bi-i',t('obi'));s('opt-me-i',t('ome'));s('sec-cert-i',t('sc2'));s('cert1',t('c1'));s('cert2',t('c2'));
   s('i-res-ttl',t('res'));s('i-panels-lbl',t('plbl'));s('i-ptype-lbl',t('ptyp'));s('i-lead-ttl',t('ltl'));s('i-instiva',t('iiva'));s('i-suma-lbl',t('slbl'));s('i-bill-lbl',t('blbl'));sh('i-contact',t('cnt'));
   document.getElementById('i-wa').innerText=t('wabtn');s('i-dept',t('dlbl'));s('i-sales',t('osl'));s('i-tech',t('otl'));s('i-cta',t('cta'));s('i-pmes',t('pm'));
-  // Híbrido
   s('sec-uso-h',t('su'));s('opt-bi-h',t('obi'));s('opt-me-h',t('ome'));s('sec-bat-h',t('sbt'));s('h-hrs-lbl',t('hhrs'));s('h-dod-lbl',t('hdod'));s('h-volt-lbl',t('hvolt'));
   s('h-bat-sel-lbl',t('hbatsel'));s('h-inv-sel-lbl',t('hinvsel'));s('h-res-ttl',t('res'));s('h-panels-lbl',t('plbl'));s('h-ptype-lbl',t('ptyp'));
   s('h-bat-lbl',t('hbat'));s('h-batnum-lbl',t('hbn'));s('h-batunit',t('hbu'));s('h-inv-lbl',t('hinv'));s('h-rec-lbl',t('hrec'));s('h-aho-lbl',t('haho'));
   s('h-lead-ttl',t('hltl'));s('h-instiva',t('iiva'));s('h-suma-lbl',t('slbl'));s('h-bill-lbl',t('blbl'));sh('h-contact',t('cnt'));
   document.getElementById('h-wa').innerText=t('wabtn');s('h-dept',t('dlbl'));s('h-sales',t('osl'));s('h-tech',t('otl'));s('h-cta',t('cta'));s('h-pm1',t('pm'));s('h-pm2',t('pm'));s('h-pm3',t('pm'));
-  // Aislado
   s('sec-app-a',t('sap'));s('a-hint',t('ahnt'));s('sec-param-a',t('spr'));s('a-dias-lbl',t('adas'));s('a-dod-lbl',t('adod'));s('a-volt-lbl',t('avlt'));
   s('a-bat-sel-lbl',t('abatsel'));s('a-inv-sel-lbl',t('ainvsel'));s('a-res-ttl',t('res'));s('a-panels-lbl',t('plbl'));s('a-ptype-lbl',t('ptyp'));
   s('a-dem-lbl',t('adem'));s('a-bat-lbl',t('abat'));s('a-batnum-lbl',t('abn'));s('a-batunit',t('abu'));s('a-inv-lbl',t('ainv'));
   s('a-lead-ttl',t('altl'));s('a-instiva',t('iiva'));s('a-suma-lbl',t('slbl'));sh('a-contact',t('cnt'));
   document.getElementById('a-wa').innerText=t('wabtn');s('a-dept',t('dlbl'));s('a-sales',t('osl'));s('a-tech',t('otl'));s('a-cta',t('cta'));
 }
-
-// ══════════════════════════════════════════════════════════
-// CALCULATOR 1 — INTERCONECTADO
-// ══════════════════════════════════════════════════════════
-function calcI(){
-  const {avg,men,bi}=readKwh('i');const panel=getPanel('i');
-  const pan=men>0?getPanelCount(men,panel.w):0;
-  if(!pan){s('i-panels','0');document.getElementById('i-lead').classList.add('hidden');return;}
-  const sist=getSist(Math.ceil((pan*panel.w)/1000));
-  s('i-panels',sist.pan);
-  const recibo=cfe(men);const suma=document.getElementById('i-suma').checked;
-  const precio=setPrecio('i-precio-wrap',sist.precio,suma);
-  const nom=document.getElementById('nombre').value||(lang==='es'?'Cliente':'Customer');
-  s('i-kw',sist.kw);
-  s('i-desc',lang==='es'?`Sistema ${sist.kw}kW — ${sist.pan}×${panel.w}W / Inv ${sist.inv}`:`${sist.kw}kW System — ${sist.pan}×${panel.w}W / Inv ${sist.inv}`);
-  s('i-recibo',fmt(recibo));s('i-save',TX[lang].svlbl(fmt(recibo)));
-  document.getElementById('i-lead').classList.remove('hidden');
-  showKit('i',sist.kw,KITS_I);
-  const su=suma?t('wsu'):'';const per=bi?t('wbi'):t('wme');
-  const msg=`${t('wgi')}%0A%0A⚡ ${lang==='es'?'Consumo':'Consumption'}: ${avg} kWh ${per}%0A💸 $${fmt(recibo)}${t('pm')}%0A🔋 ${sist.kw}kW — ${sist.pan} paneles ${panel.w}W%0A💵 $${fmt(precio)} ${t('iiva')}${su}%0A%0A${t('wfr')} ${nom}.`;
-  document.getElementById('i-wa').href=`https://wa.me/5216122198325?text=${msg}`;
-}
-
-// ══════════════════════════════════════════════════════════
-// CALCULATOR 2 — HÍBRIDO
-// ══════════════════════════════════════════════════════════
-function calcH(){
-  const {avg,men,bi}=readKwh('h');const panel=getPanel('h');const bat=getBat('h');const inv=getInv('h');
-  const horas=Number(document.getElementById('h-hrs').value)||8;
-  const dod=Number(document.getElementById('h-dod').value)||80;
-  const pan=men>0?getPanelCount(men,panel.w):0;
-  if(!pan){s('h-panels','0');document.getElementById('h-lead').classList.add('hidden');document.getElementById('h-rows').classList.add('hidden');return;}
-  const sist=getSist(Math.ceil((pan*panel.w)/1000));
-  s('h-panels',sist.pan);
-  const kwD=men/30.4;const batKwh=Math.round(((kwD/24)*horas)/(dod/100)*10)/10;
-  const batNum=Math.ceil(batKwh/bat.kwh);const recibo=cfe(men);
-  s('h-batKwh',batKwh.toFixed(1));s('h-batNum',batNum);s('h-invKw',inv.kw);s('h-recibo',fmt(recibo));s('h-ahorro',fmt(recibo));
-  document.getElementById('h-rows').classList.remove('hidden');
-  const pBase=sist.precio+batNum*bat.precio+inv.precio;
-  const suma=document.getElementById('h-suma').checked;const precio=setPrecio('h-precio-wrap',pBase,suma);
-  const nom=document.getElementById('nombre').value||(lang==='es'?'Cliente':'Customer');
-  s('h-kw',sist.kw);
-  s('h-desc',lang==='es'?`Híbrido ${sist.kw}kW — ${sist.pan}×${panel.w}W / ${batNum}×${bat.es} / ${inv.es}`:`Hybrid ${sist.kw}kW — ${sist.pan}×${panel.w}W / ${batNum}×${bat.en} / ${inv.en}`);
-  s('h-recibo2',fmt(recibo));s('h-save',TX[lang].svlbl(fmt(recibo)));
-  document.getElementById('h-lead').classList.remove('hidden');
-  showKit('h',sist.kw,KITS_H);
-  const su=suma?t('wsu'):'';const per=bi?t('wbi'):t('wme');
-  const msg=`${t('wgh')}%0A%0A⚡ ${avg} kWh ${per}%0A🔋 ${batKwh.toFixed(1)}kWh (${batNum}×${bat.kwh}kWh)%0A⚙️ ${lang==='es'?inv.es:inv.en}%0A💸 $${fmt(recibo)}${t('pm')}%0A💵 $${fmt(precio)} ${t('iiva')}${su}%0A%0A${t('wfr')} ${nom}.`;
-  document.getElementById('h-wa').href=`https://wa.me/5216122198325?text=${msg}`;
-}
-
-// ══════════════════════════════════════════════════════════
-// CALCULATOR 3 — AISLADO
-// ══════════════════════════════════════════════════════════
-function calcA(){
-  const panel=getPanel('a');const bat=getBat('a');const inv=getInv('a');
-  const dias=Number(document.getElementById('a-dias').value)||2;
-  const dod=Number(document.getElementById('a-dod').value)||80;
-  let whD=0,maxW=0;
-  CARGAS.forEach(c=>{
-    const u=Number(document.getElementById('au-'+c.id)?.value)||0;
-    const h=Number(document.getElementById('ah-'+c.id)?.value)||0;
-    whD+=u*c.w*h;maxW=Math.max(maxW,u*c.w);
-  });
-  s('a-demand',fmt(Math.round(whD)));
-  if(!whD){s('a-panels','0');document.getElementById('a-lead').classList.add('hidden');document.getElementById('a-rows').classList.add('hidden');return;}
-  const batKwh=Math.round(((whD/1000)*dias)/(dod/100)*10)/10;
-  const batNum=Math.ceil(batKwh/bat.kwh);
-  const pan=Math.ceil(((whD/1000)/(HSP*EFF*0.8)*1000)/panel.w);
-  const invKw=Math.max(1,Math.ceil((maxW/1000)*1.25*10)/10);
-  s('a-panels',pan);s('a-batKwh',batKwh.toFixed(1));s('a-batNum',batNum);s('a-invKw',invKw.toFixed(1));
-  document.getElementById('a-rows').classList.remove('hidden');
-  const pBase=pan*3800+batNum*bat.precio+inv.precio+25000;
-  const suma=document.getElementById('a-suma').checked;const precio=setPrecio('a-precio-wrap',pBase,suma);
-  const nom=document.getElementById('nombre').value||(lang==='es'?'Cliente':'Customer');
-  s('a-desc',lang==='es'?`Aislado — ${pan}×${panel.w}W / ${batNum}×${bat.es} / Inv ${invKw.toFixed(1)}kW`:`Off-Grid — ${pan}×${panel.w}W / ${batNum}×${bat.en} / Inv ${invKw.toFixed(1)}kW`);
-  document.getElementById('a-lead').classList.remove('hidden');
-  const su=suma?t('wsu'):'';
-  const msg=`${t('wga')}%0A%0A☀️ ${fmt(Math.round(whD))} Wh/día%0A🔋 ${batKwh.toFixed(1)}kWh (${batNum}×${bat.kwh}kWh)%0A🔢 ${pan}×${panel.w}W%0A⚙️ Inv ${invKw.toFixed(1)}kW%0A💵 $${fmt(precio)} ${t('iiva')}${su}%0A%0A${t('wfr')} ${nom}.`;
-  document.getElementById('a-wa').href=`https://wa.me/5216122198325?text=${msg}`;
-}
-
-// ══════════════════════════════════════════════════════════
-// SEND WA (CTA)
-// ══════════════════════════════════════════════════════════
-function sendWA(p){
-  const nom=document.getElementById('nombre').value;const tel=document.getElementById('telefono').value;const loc=document.getElementById('direccion').value;
-  if(!nom){alert(t('alrt'));return;}
-  const num=document.getElementById(p+'-wanum').value;
-  const nc=lang==='es'?'Cliente':'Customer';const lc=lang==='es'?'Ubicación':'Location';
-  const hdrs={i:lang==='es'?'COTIZACIÓN SOLAR INTERCONECTADO':'GRID-TIED SOLAR QUOTE',h:lang==='es'?'COTIZACIÓN SOLAR HÍBRIDO':'HYBRID SOLAR QUOTE',a:lang==='es'?'COTIZACIÓN SOLAR AISLADO':'OFF-GRID SOLAR QUOTE'};
-  let body='';
-  if(p==='i'){
-    const pan=document.getElementById('i-panels').innerText;const kw=document.getElementById('i-kw').innerText;
-    if(!pan||pan==='0'){alert(t('alrt'));return;}
-    body=`*${hdrs.i} - BAJA PRO-SERVICES*\n${nc}: ${nom}\nWhatsApp: ${tel}\n${lc}: ${loc}\nSistema: ${kw}kW | ${pan} paneles ${getPanel('i').w}W`;
-  }else if(p==='h'){
-    const pan=document.getElementById('h-panels').innerText;const kw=document.getElementById('h-kw').innerText;
-    if(!pan||pan==='0'){alert(t('alrt'));return;}
-    const bat=getBat('h');const inv=getInv('h');
-    body=`*${hdrs.h} - BAJA PRO-SERVICES*\n${nc}: ${nom}\nWhatsApp: ${tel}\n${lc}: ${loc}\nSistema: ${kw}kW | ${pan} paneles ${getPanel('h').w}W\nBat: ${lang==='es'?bat.es:bat.en} | Inv: ${lang==='es'?inv.es:inv.en}`;
-  }else{
-    const pan=document.getElementById('a-panels').innerText;
-    if(!pan||pan==='0'){alert(t('alrt'));return;}
-    const bat=getBat('a');const inv=getInv('a');
-    body=`*${hdrs.a} - BAJA PRO-SERVICES*\n${nc}: ${nom}\nWhatsApp: ${tel}\n${lc}: ${loc}\nDemanda: ${document.getElementById('a-demand').innerText} Wh/día | ${pan} paneles\nBat: ${lang==='es'?bat.es:bat.en} | Inv: ${lang==='es'?inv.es:inv.en}`;
-  }
-  window.open(`https://wa.me/${num}?text=${encodeURIComponent(body)}`,'_blank');
-}
-
-// ══════════════════════════════════════════════════════════
-// INIT
-// ══════════════════════════════════════════════════════════
-document.addEventListener('DOMContentLoaded',()=>{
-  applyLang();
-  buildPanelPickers();
-  buildBatCards('h');buildInvCards('h');
-  buildBatCards('a');buildInvCards('a');
-  buildAppGrid();
-  calcI();calcH();calcA();
-});
+function calcI(){const {avg,men,bi}=readKwh('i');const panel=getPanel('i');const pan=men>0?getPanelCount(men,panel.w):0;if(!pan){s('i-panels','0');document.getElementById('i-lead').classList.add('hidden');return;}const sist=getSist(Math.ceil((pan*panel.w)/1000));s('i-panels',sist.pan);const recibo=cfe(men);const suma=document.getElementById('i-suma').checked;const precio=setPrecio('i-precio-wrap',sist.precio,suma);const nom=document.getElementById('nombre').value||(lang==='es'?'Cliente':'Customer');s('i-kw',sist.kw);s('i-desc',lang==='es'?`Sistema ${sist.kw}kW — ${sist.pan}×${panel.w}W / Inv ${sist.inv}`:`${sist.kw}kW System — ${sist.pan}×${panel.w}W / Inv ${sist.inv}`);s('i-recibo',fmt(recibo));s('i-save',TX[lang].svlbl(fmt(recibo)));document.getElementById('i-lead').classList.remove('hidden');showKit('i',sist.kw,KITS_I);const su=suma?t('wsu'):'';const per=bi?t('wbi'):t('wme');const msg=`${t('wgi')}%0A%0A⚡ ${lang==='es'?'Consumo':'Consumption'}: ${avg} kWh ${per}%0A💸 $${fmt(recibo)}${t('pm')}%0A🔋 ${sist.kw}kW — ${sist.pan} paneles ${panel.w}W%0A💵 $${fmt(precio)} ${t('iiva')}${su}%0A%0A${t('wfr')} ${nom}.`;document.getElementById('i-wa').href=`https://wa.me/5216122198325?text=${msg}`;}
+function calcH(){const {avg,men,bi}=readKwh('h');const panel=getPanel('h');const bat=getBat('h');const inv=getInv('h');const horas=Number(document.getElementById('h-hrs').value)||8;const dod=Number(document.getElementById('h-dod').value)||80;const pan=men>0?getPanelCount(men,panel.w):0;if(!pan){s('h-panels','0');document.getElementById('h-lead').classList.add('hidden');document.getElementById('h-rows').classList.add('hidden');return;}const sist=getSist(Math.ceil((pan*panel.w)/1000));s('h-panels',sist.pan);const kwD=men/30.4;const batKwh=Math.round(((kwD/24)*horas)/(dod/100)*10)/10;const batNum=Math.ceil(batKwh/bat.kwh);const recibo=cfe(men);s('h-batKwh',batKwh.toFixed(1));s('h-batNum',batNum);s('h-invKw',inv.kw);s('h-recibo',fmt(recibo));s('h-ahorro',fmt(recibo));document.getElementById('h-rows').classList.remove('hidden');const pBase=sist.precio+batNum*bat.precio+inv.precio;const suma=document.getElementById('h-suma').checked;const precio=setPrecio('h-precio-wrap',pBase,suma);const nom=document.getElementById('nombre').value||(lang==='es'?'Cliente':'Customer');s('h-kw',sist.kw);s('h-desc',lang==='es'?`Híbrido ${sist.kw}kW — ${sist.pan}×${panel.w}W / ${batNum}×${bat.es} / ${inv.es}`:`Hybrid ${sist.kw}kW — ${sist.pan}×${panel.w}W / ${batNum}×${bat.en} / ${inv.en}`);s('h-recibo2',fmt(recibo));s('h-save',TX[lang].svlbl(fmt(recibo)));document.getElementById('h-lead').classList.remove('hidden');showKit('h',sist.kw,KITS_H);const su=suma?t('wsu'):'';const per=bi?t('wbi'):t('wme');const msg=`${t('wgh')}%0A%0A⚡ ${avg} kWh ${per}%0A🔋 ${batKwh.toFixed(1)}kWh (${batNum}×${bat.kwh}kWh)%0A⚙️ ${lang==='es'?inv.es:inv.en}%0A💸 $${fmt(recibo)}${t('pm')}%0A💵 $${fmt(precio)} ${t('iiva')}${su}%0A%0A${t('wfr')} ${nom}.`;document.getElementById('h-wa').href=`https://wa.me/5216122198325?text=${msg}`;}
+function calcA(){const panel=getPanel('a');const bat=getBat('a');const inv=getInv('a');const dias=Number(document.getElementById('a-dias').value)||2;const dod=Number(document.getElementById('a-dod').value)||80;let whD=0,maxW=0;CARGAS.forEach(c=>{const u=Number(document.getElementById('au-'+c.id)?.value)||0;const h=Number(document.getElementById('ah-'+c.id)?.value)||0;whD+=u*c.w*h;maxW=Math.max(maxW,u*c.w);});s('a-demand',fmt(Math.round(whD)));if(!whD){s('a-panels','0');document.getElementById('a-lead').classList.add('hidden');document.getElementById('a-rows').classList.add('hidden');return;}const batKwh=Math.round(((whD/1000)*dias)/(dod/100)*10)/10;const batNum=Math.ceil(batKwh/bat.kwh);const pan=Math.ceil(((whD/1000)/(HSP*EFF*0.8)*1000)/panel.w);const invKw=Math.max(1,Math.ceil((maxW/1000)*1.25*10)/10);s('a-panels',pan);s('a-batKwh',batKwh.toFixed(1));s('a-batNum',batNum);s('a-invKw',invKw.toFixed(1));document.getElementById('a-rows').classList.remove('hidden');const pBase=pan*3800+batNum*bat.precio+inv.precio+25000;const suma=document.getElementById('a-suma').checked;const precio=setPrecio('a-precio-wrap',pBase,suma);const nom=document.getElementById('nombre').value||(lang==='es'?'Cliente':'Customer');s('a-desc',lang==='es'?`Aislado — ${pan}×${panel.w}W / ${batNum}×${bat.es} / Inv ${invKw.toFixed(1)}kW`:`Off-Grid — ${pan}×${panel.w}W / ${batNum}×${bat.en} / Inv ${invKw.toFixed(1)}kW`);document.getElementById('a-lead').classList.remove('hidden');const su=suma?t('wsu'):'';const msg=`${t('wga')}%0A%0A☀️ ${fmt(Math.round(whD))} Wh/día%0A🔋 ${batKwh.toFixed(1)}kWh (${batNum}×${bat.kwh}kWh)%0A🔢 ${pan}×${panel.w}W%0A⚙️ Inv ${invKw.toFixed(1)}kW%0A💵 $${fmt(precio)} ${t('iiva')}${su}%0A%0A${t('wfr')} ${nom}.`;document.getElementById('a-wa').href=`https://wa.me/5216122198325?text=${msg}`;}
+function sendWA(p){const nom=document.getElementById('nombre').value;const tel=document.getElementById('telefono').value;const loc=document.getElementById('direccion').value;if(!nom){alert(t('alrt'));return;}const num=document.getElementById(p+'-wanum').value;const nc=lang==='es'?'Cliente':'Customer';const lc=lang==='es'?'Ubicación':'Location';const hdrs={i:lang==='es'?'COTIZACIÓN SOLAR INTERCONECTADO':'GRID-TIED SOLAR QUOTE',h:lang==='es'?'COTIZACIÓN SOLAR HÍBRIDO':'HYBRID SOLAR QUOTE',a:lang==='es'?'COTIZACIÓN SOLAR AISLADO':'OFF-GRID SOLAR QUOTE'};let body='';if(p==='i'){const pan=document.getElementById('i-panels').innerText;const kw=document.getElementById('i-kw').innerText;if(!pan||pan==='0'){alert(t('alrt'));return;}body=`*${hdrs.i} - BAJA PRO-SERVICES*\n${nc}: ${nom}\nWhatsApp: ${tel}\n${lc}: ${loc}\nSistema: ${kw}kW | ${pan} paneles ${getPanel('i').w}W`;}else if(p==='h'){const pan=document.getElementById('h-panels').innerText;const kw=document.getElementById('h-kw').innerText;if(!pan||pan==='0'){alert(t('alrt'));return;}const bat=getBat('h');const inv=getInv('h');body=`*${hdrs.h} - BAJA PRO-SERVICES*\n${nc}: ${nom}\nWhatsApp: ${tel}\n${lc}: ${loc}\nSistema: ${kw}kW | ${pan} paneles ${getPanel('h').w}W\nBat: ${lang==='es'?bat.es:bat.en} | Inv: ${lang==='es'?inv.es:inv.en}`;}else{const pan=document.getElementById('a-panels').innerText;if(!pan||pan==='0'){alert(t('alrt'));return;}const bat=getBat('a');const inv=getInv('a');body=`*${hdrs.a} - BAJA PRO-SERVICES*\n${nc}: ${nom}\nWhatsApp: ${tel}\n${lc}: ${loc}\nDemanda: ${document.getElementById('a-demand').innerText} Wh/día | ${pan} paneles\nBat: ${lang==='es'?bat.es:bat.en} | Inv: ${lang==='es'?inv.es:inv.en}`;}window.open(`https://wa.me/${num}?text=${encodeURIComponent(body)}`,'_blank');}
+document.addEventListener('DOMContentLoaded',()=>{applyLang();buildPanelPickers();buildBatCards('h');buildInvCards('h');buildBatCards('a');buildInvCards('a');buildAppGrid();calcI();calcH();calcA();});
 </script>
 </body>
 </html>
