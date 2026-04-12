@@ -1,867 +1,638 @@
 <index.html>
 <html lang="es">
 <head>
-<!-- Playables SDK -->
-<script>// Playables SDK v1.0.0
-// Game lifecycle bridge: rAF-based game-ready detection + event communication
-(function() {
-  'use strict';
-
-  // Idempotency: skip if already initialized (e.g., server-side injection
-  // followed by client-side inject-javascript via the Bloks webview component).
-  if (window.playablesSDK) return;
-
-  var HANDLER_NAME = 'playablesGameEventHandler';
-  var ANDROID_BRIDGE_NAME = '_MetaPlayablesBridge';
-  var RAF_FRAME_THRESHOLD = 3;
-
-  var gameReadySent = false;
-  var firstInteractionSent = false;
-  var errorSent = false;
-  var frameCount = 0;
-  var originalRAF = window.requestAnimationFrame;
-
-  // --- Transport Layer ---
-
-  function hasIOSBridge() {
-    return !!(window.webkit &&
-              window.webkit.messageHandlers &&
-              window.webkit.messageHandlers[HANDLER_NAME]);
-  }
-
-  function hasAndroidBridge() {
-    return !!(window[ANDROID_BRIDGE_NAME] &&
-              typeof window[ANDROID_BRIDGE_NAME].postEvent === 'function');
-  }
-
-  function isInIframe() {
-    return !!(window.parent && window.parent !== window);
-  }
-
-  function sendEvent(eventName, payload) {
-    var message = {
-      type: eventName,
-      payload: payload || {},
-      timestamp: Date.now()
-    };
-
-    if (hasIOSBridge()) {
-      try {
-        window.webkit.messageHandlers[HANDLER_NAME].postMessage(message);
-      } catch (e) { /* ignore */ }
-      return;
-    }
-
-    if (hasAndroidBridge()) {
-    try {
-      var p = payload || {};
-      p.__secureToken = window.__fbAndroidBridgeAuthToken || '';
-      window[ANDROID_BRIDGE_NAME].postEvent(
-        eventName,
-        JSON.stringify(p)
-      );
-    } catch (e) { /* ignore */ }
-    return;
-  }
-
-    if (isInIframe()) {
-      try {
-        window.parent.postMessage(message, '*');
-      } catch (e) { /* ignore */ }
-      return;
-    }
-  }
-
-  // --- rAF Game-Ready Detection ---
-
-  function onFrame() {
-    if (gameReadySent) return;
-
-    frameCount++;
-    if (frameCount >= RAF_FRAME_THRESHOLD) {
-      gameReadySent = true;
-      sendEvent('game_ready', {
-        frame_count: frameCount,
-        detected_at: Date.now()
-      });
-      return;
-    }
-
-    originalRAF.call(window, onFrame);
-  }
-
-  if (originalRAF) {
-    window.requestAnimationFrame = function(callback) {
-      if (!gameReadySent) {
-        return originalRAF.call(window, function(timestamp) {
-          frameCount++;
-          if (frameCount >= RAF_FRAME_THRESHOLD && !gameReadySent) {
-            gameReadySent = true;
-            sendEvent('game_ready', {
-              frame_count: frameCount,
-              detected_at: Date.now()
-            });
-          }
-          callback(timestamp);
-        });
-      }
-      return originalRAF.call(window, callback);
-    };
-  }
-
-  // --- First User Interaction Detection ---
-
-  function setupFirstInteractionDetection() {
-    var events = ['touchstart', 'mousedown', 'keydown'];
-
-    function onFirstInteraction() {
-      if (firstInteractionSent) return;
-      firstInteractionSent = true;
-      sendEvent('user_interaction_start', null);
-
-      for (var i = 0; i < events.length; i++) {
-        document.removeEventListener(events[i], onFirstInteraction, true);
-      }
-    }
-
-    for (var i = 0; i < events.length; i++) {
-      document.addEventListener(events[i], onFirstInteraction, true);
-    }
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', setupFirstInteractionDetection);
-  } else {
-    setupFirstInteractionDetection();
-  }
-
-  // --- Auto Error Capture ---
-
-  window.addEventListener('error', function(event) {
-    if (errorSent) return;
-    errorSent = true;
-    sendEvent('error', {
-      message: event.message || 'Unknown error',
-      source: event.filename || '',
-      lineno: event.lineno || 0,
-      colno: event.colno || 0,
-      auto_captured: true
-    });
-  });
-
-  window.addEventListener('unhandledrejection', function(event) {
-    if (errorSent) return;
-    errorSent = true;
-    var reason = event.reason;
-    sendEvent('error', {
-      message: (reason instanceof Error) ? reason.message : String(reason),
-      type: 'unhandled_promise_rejection',
-      auto_captured: true
-    });
-  });
-
-  // --- Public API ---
-
-  window.playablesSDK = {
-    complete: function(score) {
-      sendEvent('game_ended', {
-        score: score,
-        completed: true
-      });
-    },
-
-    error: function(message) {
-      if (errorSent) return;
-      errorSent = true;
-      sendEvent('error', {
-        message: message || 'Unknown error',
-        auto_captured: false
-      });
-    },
-
-    sendEvent: function(eventName, payload) {
-      if (!eventName || typeof eventName !== 'string') return;
-      sendEvent(eventName, payload);
-    }
-  };
-
-  // Kick off rAF detection in case no game code calls rAF immediately
-  if (originalRAF) {
-    originalRAF.call(window, onFrame);
-  }
-})();</script>
-<script>window.Intl=window.Intl||{};Intl.t=function(s){return(Intl._locale&&Intl._locale[s])||s;};</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Baja Pro-Services - Calculadora Solar CFE</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<title>Baja ProServices - Calculadora Solar Analítica Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --emerald: #10b981;
-  --emerald-dark: #064e3b;
-  --emerald-light: #d1fae5;
-  --emerald-mid: #059669;
-}
-body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: #f8fafc;
-}
-.icon-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
-}
-@media (min-width: 640px) {
-  .icon-grid { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-}
-@media (min-width: 1024px) {
-  .icon-grid { grid-template-columns: repeat(9, 1fr); }
-}
-.icon-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 1rem 0.5rem;
-  background: linear-gradient(145deg, #ffffff, #f0fdf4);
-  border: 1.5px solid #d1fae5;
-  border-radius: 16px;
-  transition: all 0.3s ease;
-  box-shadow: 0 1px 3px rgba(6,78,59,0.05);
-}
-.icon-item:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(16,185,129,0.15);
-  border-color: #10b981;
-}
-.icon-item svg {
-  margin-bottom: 0.6rem;
-  flex-shrink: 0;
-}
-.icon-item span {
-  font-size: 0.70rem;
-  font-weight: 700;
-  color: #064e3b;
-  line-height: 1.1;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-}
-.btn-emerald {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  box-shadow: 0 4px 14px rgba(16,185,129,0.3);
-}
-.btn-emerald:hover {
-  background: linear-gradient(135deg, #059669 0%, #047857 100%);
-  box-shadow: 0 6px 20px rgba(16,185,129,0.4);
-  transform: translateY(-1px);
-}
-.input-field {
-  transition: all 0.2s;
-  border: 1.5px solid #e5e7eb;
-}
-.input-field:focus {
-  border-color: #10b981;
-  box-shadow: 0 0 0 3px rgba(16,185,129,0.1);
-  outline: none;
-}
+    /* --- VARIABLES DE DISEÑO ELITE (Paleta Verde Aqua) --- */
+    :root {
+        --primary: #008080; /* Teal/Aqua Principal */
+        --primary-dark: #006666;
+        --accent: #40E0D0; /* Turquesa Brillante */
+        --bg-light: #F0FDFA; /* Fondo Aqua Suave */
+        --text-dark: #1F2937;
+        --text-light: #FFFFFF;
+        --border: #A7F3D0;
+        --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        --transition: all 0.3s ease;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
+    body { font-family: 'Roboto', sans-serif; background-color: #F9FAFB; color: var(--text-dark); line-height: 1.6; }
+
+    /* --- SECCIÓN HERO LIMPIA Y PROFESIONAL --- */
+    .hero {
+        width: 100%;
+        height: 80vh; /* Ocupa gran parte de la pantalla inicial */
+        background-image: url('img/hero.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+    .hero-overlay {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(180deg, rgba(0,128,128,0.2) 0%, rgba(249,250,2FB,1) 100%);
+    }
+    .hero-content {
+        position: relative; z-index: 10; text-align: center; color: var(--text-light);
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5); padding: 20px;
+    }
+    .hero-content h1 { font-size: 3.5rem; font-weight: 700; margin-bottom: 10px; }
+    .hero-content p { font-size: 1.5rem; font-weight: 300; }
+
+    /* --- CONTENEDOR PRINCIPAL --- */
+    .main-container { max-width: 1200px; margin: -100px auto 50px; padding: 0 20px; position: relative; z-index: 20; }
+
+    /* --- SELECTOR DE MODO (TABS) --- */
+    .mode-selector {
+        display: flex; background: var(--text-light); border-radius: 12px;
+        overflow: hidden; box-shadow: var(--shadow); margin-bottom: 30px;
+    }
+    .mode-tab {
+        flex: 1; text-align: center; padding: 20px; cursor: pointer;
+        font-weight: 500; font-size: 1.1rem; color: var(--primary-dark);
+        transition: var(--transition); border-bottom: 4px solid transparent;
+        display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .mode-tab:hover { background-color: var(--bg-light); }
+    .mode-tab.active {
+        color: var(--primary); border-bottom-color: var(--primary);
+        background-color: var(--bg-light); font-weight: 700;
+    }
+    .mode-tab img { width: 24px; height: 24px; }
+
+    /* --- SECCIONES DE CALCULADORA --- */
+    .calc-section { display: none; background: var(--text-light); padding: 40px; border-radius: 12px; box-shadow: var(--shadow); }
+    .calc-section.show { display: block; animation: fadeIn 0.5s ease; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* --- ESTILOS DE FORMULARIO ANALÍTICO --- */
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-bottom: 30px; }
+    .input-group { display: flex; flex-direction: column; }
+    .input-group label { font-size: 0.9rem; font-weight: 500; color: var(--primary-dark); margin-bottom: 8px; }
+    .input-group label span { color: #EF4444; } /* Asterisco requerido */
+    
+    input[type="text"], input[type="number"], input[type="tel"], input[type="email"], select {
+        padding: 12px 15px; border: 2px solid var(--border); border-radius: 8px;
+        font-size: 1rem; color: var(--text-dark); transition: var(--transition);
+    }
+    input:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(64, 224, 208, 0.2); }
+
+    /* --- SELECCIÓN DE PANELES (PICKER) --- */
+    .panel-picker { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 30px; }
+    .panel-card {
+        border: 2px solid var(--border); border-radius: 10px; padding: 20px; cursor: pointer;
+        transition: var(--transition); display: flex; align-items: center; gap: 15px;
+    }
+    .panel-card:hover { border-color: var(--accent); background-color: var(--bg-light); }
+    .panel-card.active { border-color: var(--primary); background-color: var(--bg-light); box-shadow: 0 0 10px rgba(0,128,128,0.2); }
+    .panel-card img { width: 60px; height: auto; }
+    .panel-details { display: flex; flex-direction: column; }
+    .panel-model { font-weight: 700; color: var(--primary-dark); }
+    .panel-watts { font-size: 1.2rem; color: var(--primary); font-weight: 700; }
+
+    /* --- GRILLA DE ELECTRODOMÉSTICOS (OFF-GRID) --- */
+    .appliance-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; margin-bottom: 30px; }
+    .appliance-card {
+        border: 2px solid #E5E7EB; border-radius: 10px; padding: 15px; text-align: center;
+        cursor: pointer; transition: var(--transition); position: relative;
+    }
+    .appliance-card:hover { border-color: var(--accent); }
+    .appliance-card.selected { border-color: var(--primary); background-color: var(--bg-light); }
+    .appliance-card img { width: 50px; height: 50px; margin-bottom: 10px; object-fit: contain; }
+    .appliance-name { font-size: 0.9rem; font-weight: 500; margin-bottom: 5px; }
+    .appliance-watts { font-size: 0.8rem; color: #6B7280; margin-bottom: 10px; }
+    
+    .appliance-inputs { display: none; flex-direction: column; gap: 5px; margin-top: 10px; border-top: 1px solid var(--border); padding-top: 10px; }
+    .appliance-card.selected .appliance-inputs { display: flex; }
+    .app_in { padding: 5px; border: 1px solid var(--border); border-radius: 4px; font-size: 0.8rem; text-align: center; }
+
+    /* --- BOTONES ELITE --- */
+    .btn-container { text-align: center; margin-top: 30px; }
+    .btn-calc {
+        background-color: var(--primary); color: var(--text-light); border: none;
+        padding: 15px 40px; font-size: 1.1rem; font-weight: 700; border-radius: 8px;
+        cursor: pointer; transition: var(--transition); text-transform: uppercase; letter-spacing: 1px;
+    }
+    .btn-calc:hover { background-color: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 5px 10px rgba(0,0,0,0.1); }
+
+    /* --- ÁREA DE RESULTADOS (ANÁLITICA Y VISUAL) --- */
+    .results-area { display: none; margin-top: 40px; padding-top: 30px; border-top: 2px solid var(--border); }
+    .results-area.show { display: block; animation: fadeIn 0.5s ease; }
+    
+    .results-header { text-align: center; margin-bottom: 30px; }
+    .results-header h2 { color: var(--primary); font-size: 2rem; }
+    .results-header p { color: #6B7280; }
+
+    .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 30px; }
+    
+    .result-card {
+        background: var(--bg-light); border: 2px solid var(--border); border-radius: 12px;
+        padding: 25px; display: flex; flex-direction: column; align-items: center; text-align: center;
+    }
+    .result-icon { width: 50px; height: 50px; margin-bottom: 15px; }
+    .result-val { font-size: 2.5rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 5px; }
+    .result-lbl { font-size: 1rem; font-weight: 500; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; }
+    .result-desc { font-size: 0.9rem; color: #6B7280; margin-top: 5px; }
+
+    /* --- KIT SUGERIDO --- */
+    .kit-suggested {
+        grid-column: 1 / -1; background: var(--text-light); border: 2px solid var(--accent);
+        border-radius: 12px; padding: 30px; display: flex; align-items: center; gap: 30px;
+        box-shadow: 0 10px 20px rgba(64, 224, 208, 0.1);
+    }
+    .kit-img { max-width: 250px; height: auto; border-radius: 8px; }
+    .kit-info { flex: 1; }
+    .kit-badge {
+        background-color: var(--accent); color: var(--primary-dark); padding: 5px 10px;
+        border-radius: 20px; font-weight: 700; font-size: 0.8rem; display: inline-block; margin-bottom: 10px;
+    }
+    .kit-info h3 { font-size: 1.5rem; color: var(--primary-dark); margin-bottom: 10px; }
+    .kit-info ul { list-style: none; margin-bottom: 20px; }
+    .kit-info ul li { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.95rem; }
+    .kit-info ul li img { width: 16px; height: 16px; }
+
+    /* --- WHATSAPP CTA --- */
+    .wa-cta {
+        background-color: #25D366; color: var(--text-light); text-decoration: none;
+        padding: 15px 30px; border-radius: 8px; font-weight: 700; font-size: 1.1rem;
+        display: inline-flex; align-items: center; gap: 10px; transition: var(--transition);
+    }
+    .wa-cta:hover { background-color: #128C7E; transform: scale(1.05); }
+    .wa-cta img { width: 24px; height: 24px; }
+
+    /* --- RESPONSIVIDAD (MÓVIL) --- */
+    @media (max-width: 768px) {
+        .hero { height: 60vh; background-attachment: scroll; }
+        .hero-content h1 { font-size: 2.2rem; }
+        .hero-content p { font-size: 1.1rem; }
+        .main-container { margin-top: -50px; }
+        .mode-selector { flex-direction: column; }
+        .mode-tab { border-bottom: none; border-left: 4px solid transparent; text-align: left; justify-content: flex-start; }
+        .mode-tab.active { border-left-color: var(--primary); border-bottom-color: transparent; }
+        .calc-section { padding: 20px; }
+        .kit-suggested { flex-direction: column; text-align: center; }
+        .kit-img { max-width: 100%; }
+        .result-val { font-size: 2rem; }
+    }
 </style>
 </head>
 <body>
-<header class="bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b border-emerald-100">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center shadow-lg">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-          <circle cx="12" cy="12" r="4"/>
-          <path d="M12 2v3 M12 19v3 M2 12h3 M19 12h3 M4.9 4.9l2.1 2.1 M17 17l2.1 2.1 M4.9 19.1l2.1-2.1 M17 7l2.1-2.1"/>
-        </svg>
-      </div>
-      <div>
-        <h1 class="text-xl font-extrabold tracking-tight text-emerald-900">Baja Pro-Services</h1>
-        <p class="text-xs text-emerald-700 -mt-1 font-medium">Energía Solar Profesional</p>
-      </div>
-    <button onclick="toggleLanguage()" id="lang-btn" class="px-4 py-2 rounded-full bg-emerald-50 text-emerald-800 font-semibold text-sm border border-emerald-200 hover:bg-emerald-100 transition">EN</button>
-  </div>
-</header>
 
-<main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 lg:py-10">
-  <div class="grid lg:grid-cols-5 gap-6 lg:gap-8 items-start">
-    <!-- CALCULATOR -->
-    <div class="lg:col-span-2">
-      <div class="bg-white rounded-[24px] shadow-xl shadow-emerald-900/5 border-emerald-50 p-6 sm:p-8">
-        <div class="flex items-start justify-between mb-6">
-          <div>
-            <h2 id="calc-title" class="text-2xl font-bold text-gray-900">Calculadora Solar CFE</h2>
-            <p id="calc-subtitle" class="text-sm text-gray-500 mt-1">Diseño preciso para Mexicali • HSP 6.19</p>
-          </div>
-          <div class="bg-emerald-50 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full">85% EFICIENCIA</div>
+    <header class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>BAJA PROSERVICES</h1>
+            <p>Energía Solar Inteligente para Baja California Sur</p>
         </div>
+    </header>
 
-        <div class="space-y-5">
-          <div>
-            <label id="label-tarifa" class="block text-sm font-semibold text-gray-700 mb-2">Tarifa CFE</label>
-            <select id="tarifa" onchange="actualizarPeriodo(); calcular()" class="input-field w-full px-4 py-3 rounded-xl bg-gray-50 font-medium text-gray-900">
-              <option value="1">1 - Doméstica</option>
-              <option value="1A">1A - Doméstica</option>
-              <option value="1B">1B - Doméstica</option>
-              <option value="1C" selected>1C - Doméstica (Mexicali)</option>
-              <option value="1D">1D - Doméstica</option>
-              <option value="1E">1E - Doméstica</option>
-              <option value="1F">1F - Doméstica</option>
-              <option value="DAC">DAC - Alto Consumo</option>
-              <option value="PDBT">PDBT - Pequeña Demanda</option>
-              <option value="GDBT">GDBT - Gran Demanda BT</option>
-              <option value="GDMTO">GDMTO - Media Tensión Ordinaria</option>
-              <option value="GDMTH">GDMTH - Media Tensión Horaria</option>
-              <option value="DIST">DIST - Industrial Baja</option>
-              <option value="DIT">DIT - Industrial Media</option>
-            </select>
-          </div>
+    <main class="main-container">
 
-          <div>
-            <div class="flex justify-between items-center mb-2">
-              <label id="label-consumo" class="block text-sm font-semibold text-gray-700">Consumo CFE</label>
-              <span id="periodo-label" class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg">bimestral</span>
+        <nav class="mode-selector">
+            <div class="mode-tab active" onclick="setMode('i')" id="tab-i">
+                <img src="img/RES1005K-p.png" alt="On-Grid">
+                Interconectado (CFE)
             </div>
-            <div class="relative">
-              <input id="consumo" type="number" value="1800" oninput="calcular()" class="input-field w-full px-4 py-3 rounded-xl bg-gray-50 font-semibold text-lg text-gray-900 pr-14">
-              <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium">kWh</span>
+            <div class="mode-tab" onclick="setMode('h')" id="tab-h">
+                <img src="img/KITHYBRID8KSOL-h.jpg" alt="Hybrid">
+                Híbrido (CFE + Baterías)
             </div>
-          </div>
+            <div class="mode-tab" onclick="setMode('a')" id="tab-a">
+                <img src="img/Lux_Power_12Kw_3LiFePO4-15Kw.png" alt="Off-Grid">
+                Aislado (Sin CFE)
+            </div>
+        </nav>
 
-          <div class="grid grid-cols-2 gap-4">
-            <div>
-              <label id="label-fase" class="block text-sm font-semibold text-gray-700 mb-2">Fase</label>
-              <select id="fase" onchange="calcular()" class="input-field w-full px-4 py-3 rounded-xl bg-gray-50 font-medium">
-                <option value="1">Monofásico</option>
-                <option value="2">Bifásico</option>
-                <option value="3">Trifásico</option>
-              </select>
-              <p id="fase-nota" class="text-[11px] text-amber-600 mt-1 font-medium hidden">Auto a trifásico ≥10kW</p>
+        <section id="calc-i" class="calc-section show">
+            <div class="results-header">
+                <h2>Cálculo Interconectado a Red</h2>
+                <p>Reduce o elimina tu recibo CFE de Tarifa DAC o Residencial alta.</p>
             </div>
-            <div>
-              <label id="label-extra" class="block text-sm font-semibold text-gray-700 mb-2">kW Extra</label>
-              <input id="kwExtra" type="number" step="0.5" value="0" oninput="calcular()" class="input-field w-full px-4 py-3 rounded-xl bg-gray-50 font-medium">
-            </div>
-          </div>
 
-          <div class="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl p-4 border border-emerald-100">
-            <label class="flex items-center cursor-pointer">
-              <input type="checkbox" id="hybrid" onchange="calcular()" class="w-5 h-5 rounded-md border-2 border-emerald-300 text-emerald-600 focus:ring-emerald-500">
-              <span class="ml-3">
-                <span id="label-hybrid" class="font-bold text-emerald-900 block">Sistema Híbrido</span>
-                <span id="label-hybrid-desc" class="text-xs text-emerald-700">Con respaldo de baterías • Battery Ready</span>
-              </span>
-            </label>
-          </div>
+            <div class="form-grid">
+                <div class="input-group">
+                    <label>Nombre Completo <span>*</span></label>
+                    <input type="text" id="i-name" placeholder="Ej. Juan Pérez">
+                </div>
+                <div class="input-group">
+                    <label>WhatsApp <span>*</span></label>
+                    <input type="tel" id="i-wa" placeholder="612 123 4567">
+                </div>
+                <div class="input-group">
+                    <label>Ubicación (Ciudad/Zona) <span>*</span></label>
+                    <input type="text" id="i-loc" placeholder="Ej. La Paz, El Centenario">
+                </div>
+                <div class="input-group">
+                    <label>Consumo Promedio Bimestral (kWh) <span>*</span></label>
+                    <input type="number" id="i-kwh" placeholder="Ver recibo CFE">
+                </div>
+            </div>
 
-          <button onclick="calcular()" id="btn-calcular" class="btn-emerald w-full py-4 rounded-xl text-white font-bold text-base transition-all">
-            Calcular Sistema Óptimo
-          </button>
-        </div>
-      </div>
+            <h3 style="color:var(--primary-dark); margin-bottom:15px;">1. Selecciona tu Panel Solar</h3>
+            <div class="panel-picker" id="i-panel-picker">
+                </div>
 
-      <!-- PRECIOS -->
-      <div class="mt-4 bg-emerald-900 text-white rounded-2xl p-4 text-center">
-        <p id="price-info" class="text-xs opacity-80">Precio base instalación: <span class="font-bold">$19,066 MXN</span> por kW • IVA incluido</p>
-      </div>
-    </div>
+            <div class="btn-container">
+                <button class="btn-calc" onclick="calcularOnGrid()">Analizar Mi Sistema</button>
+            </div>
 
-    <!-- RESULTS -->
-    <div class="lg:col-span-3">
-      <div class="bg-gradient-to-br from-emerald-600 via-emerald-700 to-emerald-900 rounded-[28px] shadow-2xl shadow-emerald-900/30 p-6 sm:p-8 text-white relative overflow-hidden">
-        <div class="absolute -top-20 -right-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
-        <div class="absolute -bottom-16 -left-16 w-48 h-48 bg-teal-400/20 rounded-full blur-2xl"></div>
-        
-        <div class="relative z-10">
-          <div class="flex items-center justify-between mb-6">
-            <div>
-              <p id="result-design" class="text-emerald-200 text-sm font-semibold uppercase tracking-wider">Diseño Recomendado</p>
-              <h3 id="resultado-kwp" class="text-5xl font-black tracking-tight mt-1">6.5 kW</h3>
-            </div>
-            <div class="bg-white/15 backdrop-blur-md rounded-2xl px-4 py-3 border border-white/20">
-              <p class="text-xs opacity-80" id="label-generation">Generación</p>
-              <p class="text-xl font-bold" id="resultado-gen">1,025 kWh/mes</p>
-            </div>
-          </div>
+            <div class="results-area" id="i-results">
+                <div class="results-grid">
+                    <div class="result-card">
+                        <img src="img/optimizadoenergia solar.png" class="result-icon">
+                        <div class="result-val" id="i-res-kw">0.0</div>
+                        <div class="result-lbl">Potencia del Sistema (kWp)</div>
+                    </div>
+                    <div class="result-card">
+                        <img src="img/LP210210M66NB700W-p.png" class="result-icon">
+                        <div class="result-val" id="i-res-panels">0</div>
+                        <div class="result-lbl">Cantidad de Paneles</div>
+                        <div class="result-desc" id="i-res-panel-desc">Paneles de 0W</div>
+                    </div>
+                    <div class="result-card">
+                        <img src="img/SPF6000TDVMG2-p.png" class="result-icon">
+                        <div class="result-val" id="i-res-inv">--</div>
+                        <div class="result-lbl">Inversor Sugerido</div>
+                    </div>
 
-          <div class="grid sm:grid-cols-3 gap-4 mb-6">
-            <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15">
-              <p class="text-emerald-100 text-xs uppercase font-semibold tracking-wide" id="label-panels">Paneles</p>
-              <p id="resultado-paneles" class="text-2xl font-bold mt-1">12 x 550W</p>
-              <p class="text-xs opacity-70 mt-1">Alta eficiencia</p>
+                    <div class="kit-suggested">
+                        <img src="" id="i-kit-img" class="kit-img">
+                        <div class="kit-info">
+                            <div class="kit-badge">Solución Llave en Mano</div>
+                            <h3 id="i-kit-name">Kit Solar Residencial</h3>
+                            <ul>
+                                <li><img src="img/optimizadoenergia solar.png"> Estructura de Aluminio Anodizado</li>
+                                <li><img src="img/wifi.png"> Monitoreo WiFi por App</li>
+                                <li><img src="img/10 añosde garantía.png"> 10 Años de Garantía en Instalación</li>
+                                <li><img src="img/certificaciones y calidad.png"> Certificación CFE incluida</li>
+                            </ul>
+                            <a href="#" class="wa-cta" id="i-wa-sistemas">
+                                <img src="img/enviar por whatsApp.png"> Solicitar Cotización Formal
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15">
-              <p class="text-emerald-100 text-xs uppercase font-semibold tracking-wide" id="label-inverter">Inversor</p>
-              <p id="resultado-inversor" class="text-lg font-bold leading-tight mt-1">Growatt MIN 5000TL-XH</p>
-              <p id="resultado-fase" class="text-xs opacity-70 mt-1">Monofásico</p>
-            </div>
-            <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15">
-              <p class="text-emerald-100 text-xs uppercase font-semibold tracking-wide" id="label-brand">Marca</p>
-              <p id="resultado-marca" class="text-2xl font-bold mt-1">Growatt</p>
-              <p class="text-xs opacity-70 mt-1" id="brand-cert">UL Certified</p>
-            </div>
-          </div>
+        </section>
 
-          <div class="bg-black/20 backdrop-blur-xl rounded-3xl p-6 border border-white/20">
-            <div class="grid sm:grid-cols-3 gap-6">
-              <div>
-                <p class="text-emerald-200 text-xs uppercase font-bold tracking-wider" id="label-price">Inversión Total</p>
-                <p id="resultado-precio" class="text-4xl font-black mt-1">$123,929</p>
-                <p class="text-xs opacity-70">MXN • Instalado</p>
-              </div>
-              <div>
-                <p class="text-emerald-200 text-xs uppercase font-bold tracking-wider" id="label-current">Recibo Actual CFE</p>
-                <p id="resultado-actual" class="text-2xl font-bold mt-1">$4,850</p>
-                <p class="text-xs opacity-70" id="current-period">bimestral</p>
-              </div>
-              <div>
-                <p class="text-emerald-200 text-xs uppercase font-bold tracking-wider" id="label-new">Nuevo Recibo</p>
-                <p id="resultado-recibo" class="text-2xl font-bold mt-1 text-emerald-300">$147</p>
-                <p class="text-xs opacity-70" id="new-period">~98% ahorro</p>
-              </div>
+        <section id="calc-h" class="calc-section">
+            <div class="results-header">
+                <h2>Cálculo Híbrido (Ahorro + Respaldo)</h2>
+                <p>Ahorra con CFE y mantén energía en apagones (Cargas Críticas).</p>
             </div>
+
+            <div class="form-grid">
+                <div class="input-group">
+                    <label>Consumo Promedio Bimestral (kWh) <span>*</span></label>
+                    <input type="number" id="h-kwh" placeholder="Ver recibo CFE">
+                </div>
+                <div class="input-group">
+                    <label>Inversor Híbrido Deseado</label>
+                    <select id="h-inv-type">
+                        <option value="solark8">Sol-Ark 8K (Monofásico)</option>
+                        <option value="solark12">Sol-Ark 12K (Bifásico)</option>
+                        <option value="lux12">Lux Power 12kW (Bifásico)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Horas de Respaldo Deseadas (Sin Sol) <span>*</span></label>
+                    <input type="number" id="h-backup-hrs" placeholder="Ej. 8">
+                </div>
+                <div class="input-group">
+                    <label>Potencia de Carga Crítica a Respaldar (W) <span>*</span></label>
+                    <input type="number" id="h-load-w" placeholder="Ej. 3000 (Luces, Refri, TV)">
+                </div>
+            </div>
+
+            <div class="btn-container">
+                <button class="btn-calc" onclick="calcularHibrido()">Diseñar Sistema Híbrido</button>
+            </div>
+
+            <div class="results-area" id="h-results">
+                <div class="results-grid">
+                    <div class="result-card">
+                        <img src="img/Must-8Kw-48V-220VCA.png" class="result-icon">
+                        <div class="result-val" id="h-res-inv">Sol-Ark 8K</div>
+                        <div class="result-lbl">Centro de Energía</div>
+                    </div>
+                    <div class="result-card">
+                        <img src="img/Pytes Forest RB 11.7 Kw.png" class="result-icon">
+                        <div class="result-val" id="h-res-storage">0.0</div>
+                        <div class="result-lbl">Banco de Baterías (kWh)</div>
+                        <div class="result-desc" id="h-res-bat-desc">--</div>
+                    </div>
+                    <div class="result-card">
+                        <img src="img/KITHYBRID8KSOL-h.jpg" class="kit-img">
+                        <div class="kit-info">
+                            <a href="#" class="wa-cta" id="h-wa-btn">
+                                <img src="img/enviar por whatsApp.png"> Cotizar con Asesor
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="calc-a" class="calc-section">
+            <div class="results-header">
+                <h2>Cálculo Aislado (Off-Grid total)</h2>
+                <p>Diseño basado en consumo detallado de aparatos. Ideal para zonas sin red.</p>
+            </div>
+
+            <div class="form-grid">
+                <div class="input-group">
+                    <label>Días de Autonomía Deseados (Nublados)</label>
+                    <select id="a-auto">
+                        <option value="1">1 Día (BCS Seguro)</option>
+                        <option value="2" selected>2 Días (Estándar)</option>
+                        <option value="3">3 Días (Seguridad Alta)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Voltaje del Sistema</label>
+                    <select id="a-volt">
+                        <option value="48">48V (Recomendado Litio)</option>
+                    </select>
+                </div>
+            </div>
+
+            <h3 style="color:var(--primary-dark); margin-bottom:15px;">1. Selecciona tus Aparatos y Horas de Uso</h3>
+            <div class="appliance-grid" id="a-app-picker">
+                </div>
+
+            <div class="btn-container">
+                <button class="btn-calc" onclick="calcularOffGrid()">Dimensionar Sistema Aislado</button>
+            </div>
+
+            <div class="results-area" id="a-results">
+                <div class="results-grid">
+                    <div class="result-card">
+                        <img src="img/cagwwh.png" class="result-icon">
+                        <div class="result-val" id="a-res-daily">0.0</div>
+                        <div class="result-lbl">Consumo Diario (kWh/día)</div>
+                    </div>
+                    <div class="result-card">
+                        <img src="img/LP210210M66NB700W-p.png" class="result-icon">
+                        <div class="result-val" id="a-res-panels">0</div>
+                        <div class="result-lbl">Paneles Necesarios (700W)</div>
+                    </div>
+                    <div class="result-card">
+                        <img src="img/Pytes Forest RB 11.7 Kw.png" class="result-icon">
+                        <div class="result-val" id="a-res-storage">0.0</div>
+                        <div class="result-lbl">Banco de Baterías (48V)</div>
+                        <div class="result-desc" id="a-res-bat-desc">--</div>
+                    </div>
+                    <div class="result-card">
+                        <img src="img/Lux_Power_12Kw_3LiFePO4-15Kw.png" class="result-icon">
+                        <div class="result-val" id="a-res-inv">0.0</div>
+                        <div class="result-lbl">Inversor Off-Grid (kW)</div>
+                    </div>
+
+                    <div class="result-card" style="grid-column: 1/-1;">
+                        <a href="#" class="wa-cta" id="a-wa-btn">
+                            <img src="img/enviar por whatsApp.png"> Enviar Configuración a Baja Pro
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer style="text-align:center; padding: 30px; color: #6B7280; font-size: 0.9rem;">
+        &copy; 2023 Baja ProServices. Todos los derechos reservados. <br>
+        La Paz | Los Cabos | Baja California Sur
+    </footer>
+
+    <script>
+        // --- BASE DE DATOS TÉCNICA (INTEGRANDO TUS IMÁGENES) ---
+        const PARAMS = { HSP: 5.8, EFF_SYS: 0.77 }; // BCS HSP media, Eficiencia real
+
+        const DATA = {
+            paneles: [
+                { id: 'ep450', w: 450, model: 'EPL450M144', img: 'img/EPL450M144-p.png' },
+                { id: 'ep540', w: 540, model: 'EPL540M144', img: 'img/EPL540M144-p.png' },
+                { id: 'lp700', w: 700, model: 'Bifacial Pro', img: 'img/LP210210M66NB700W-p.png' }
+            ],
+            baterias: {
+                pytes5: { id: 'pytes5', kwh: 5.12, model: 'Pytes V5°', voltage: 48, dod: 0.9, img: 'img/Bateria de litio Pytes 48v 5.1 Kw.jpg' },
+                must5: { id: 'must5', kwh: 5.12, model: 'Must LiFePO4', voltage: 48, dod: 0.9, img: 'img/Bateria-Must-48V-5.1-Kw-LiFePO4.png' },
+                growatt5: { id: 'growatt5', kwh: 5.0, model: 'AXE 5.0L', voltage: 48, dod: 0.9, img: 'img/AXE5.0LC1-p.png' }
+            },
+            inversores_h: {
+                solark8: { model: 'Sol-Ark 8K', img: 'img/Must-8Kw-48V-220VCA.png', bat: 'must5' },
+                solark12: { model: 'Sol-Ark 12K', img: 'img/must-8kw-48v-220vca.png', bat: 'must5' },
+                lux12: { model: 'Lux Power 12kW', img: 'img/Lux_Power_12Kw_3LiFePO4-15Kw.png', bat: 'growatt5' }
+            },
+            kits_i: [
+                { kwh_min: 0, kwh_max: 800, name: 'Kit RES100 5kWp', img: 'img/RES1005K-p.png' },
+                { kwh_min: 801, kwh_max: 9999, name: 'Kit RES200 10kWp', img: 'img/RES20010K-p.png' }
+            ],
+            cargas: [
+                { id: 'ac1t', es: 'Minisplit 1 Ton (Inverter)', w: 1200, def_h: 8, img: 'img/mini_split_1_ton.png' },
+                { id: 'ac2t', es: 'Minisplit 2 Ton (Inverter)', w: 2400, def_h: 6, img: 'img/mini split 2 ton.png' },
+                { id: 'refri', es: 'Refrigerador Side-by-Side', w: 450, def_h: 10, img: 'img/refrigerador side by side.png' },
+                { id: 'ev', es: 'Cargador Auto Eléctrico', w: 7400, def_h: 4, img: 'img/cargador de auto electrico.png' },
+                { id: 'pool', es: 'Bomba Alberca (1HP)', w: 1100, def_h: 5, img: 'img/bomba para alberca.png' },
+                { id: 'tv', es: 'Pantalla OLED 65"', w: 250, def_h: 6, img: 'img/pantalla oled.png' },
+                { id: 'lavadora', es: 'Lavadora de Ropa', w: 500, def_h: 1, img: 'img/lavadora.png' },
+                { id: 'oven', es: 'Horno Eléctrico Pro', w: 3500, def_h: 1, img: 'img/horno_electrico_pro.png' },
+                { id: 'pc', es: 'PC Gamer High-End', w: 850, def_h: 4, img: 'img/computadora gamer.png' },
+                { id: 'camaras', es: 'CCTV (8 Cámaras)', w: 120, def_h: 24, img: 'img/camaras de seguridad.png' }
+            ]
+        };
+
+        // --- ESTADO GLOBAL ---
+        let currentMode = 'i';
+        let selectedPanel = DATA.paneles[2]; // Lp700 default
+
+        // --- INICIALIZACIÓN ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPanelPicker('i');
+            renderAppliancePicker();
+        });
+
+        // --- FUNCIONES DE NAVEGACIÓN (TABS) ---
+        function setMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.calc-section').forEach(s => s.classList.remove('show'));
             
-            <div class="mt-5 pt-5 border-t border-white/15 flex items-center justify-between">
-              <div>
-                <p class="text-sm opacity-80" id="label-savings">Ahorro mensual estimado</p>
-                <p id="resultado-ahorro" class="text-3xl font-black text-emerald-300">$2,351/mes</p>
-              </div>
-              <a id="whatsapp-btn" href="#" target="_blank" class="bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold px-6 py-3.5 rounded-2xl shadow-lg flex items-center gap-2.5 transition-all hover:scale-105">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.48A11.86 11.86 0 0 12.01 0C5.38 0 .04 5.34.04 11.97c0 2.11.55 4.17 1.6 5.98L0 24l6.21-1.63a11.9 11.9 0 0 0 5.8 1.48h.01c6.63 0 11.97-5.34 11.97-11.97 0-3.19-1.24-6.19-3.47-8.4ZM12.02 21.88h-.01a9.9 9.9 0 0 1-5.05-1.38l-.36-.21-3.69.97.99-3.6-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.47 4.45-9.92 9.93-9.92 2.65 0 5.14 1.03 7.01 2.9 1.87 1.87 2.9 4.36 2.9 7.01 0 5.48-4.45 9.93-9.96 9.93Zm5.44-7.43c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51-.17-.01-.37-.01-.57-.01s-.52.07-.79.37c-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.87 1.22 3.07.15.2 2.1 3.21 5.08 4.5.71.31 1.26.49 1.7.63.71.23 1.36.2 1.87.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35Z"/></svg>
-                <span id="btn-whatsapp">Cotizar Ahora</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+            document.getElementById('tab-'+mode).classList.add('active');
+            document.getElementById('calc-'+mode).classList.add('show');
+            
+            if (mode !== 'a') renderPanelPicker(mode);
+        }
 
-      <!-- CATALOG INFO -->
-      <div class="mt-6 grid sm:grid-cols-5 gap-3">
-        <div class="bg-white rounded-2xl p-4 text-center border border-gray-100 shadow-sm">
-          <p class="text-[11px] font-bold text-gray-500 uppercase tracking-wider">3-6kW</p>
-          <p class="font-bold text-emerald-800">Growatt / SMA</p>
-        </div>
-        <div class="bg-white rounded-2xl p-4 text-center border border-gray-100 shadow-sm">
-          <p class="text-[11px] font-bold text-gray-500 uppercase tracking-wider">6-10kW</p>
-          <p class="font-bold text-emerald-800">GOODWE / SOLIS</p>
-        </div>
-        <div class="bg-white rounded-2xl p-4 text-center border border-gray-100 shadow-sm">
-          <p class="text-[11px] font-bold text-gray-500 uppercase tracking-wider">10-30kW</p>
-          <p class="font-bold text-emerald-800">SMA Tripower</p>
-        </div>
-        <div class="bg-white rounded-2xl p-4 text-center border border-gray-100 shadow-sm">
-          <p class="text-[11px] font-bold text-gray-500 uppercase tracking-wider">30-75kW</p>
-          <p class="font-bold text-emerald-800">SOLIS / SMA</p>
-        </div>
-        <div class="bg-white rounded-2xl p-4 text-center border border-gray-100 shadow-sm">
-          <p class="text-[11px] font-bold text-gray-500 uppercase tracking-wider">100kW+</p>
-          <p class="font-bold text-emerald-800">Industrial</p>
-        </div>
-      </div>
-    </div>
-  </div>
+        // --- RENDERS DInÁMICOS ---
+        function renderPanelPicker(mode) {
+            const container = document.getElementById(`${mode}-panel-picker`);
+            container.innerHTML = DATA.paneles.map(p => `
+                <div class="panel-card ${p.id === selectedPanel.id ? 'active' : ''}" onclick="selectPanel('${mode}', '${p.id}')">
+                    <img src="${p.img}">
+                    <div class="panel-details">
+                        <span class="panel-model">${p.model}</span>
+                        <span class="panel-watts">${p.w}W</span>
+                    </div>
+                </div>
+            `).join('');
+        }
 
-  <!-- ICON GRID -->
-  <div class="mt-12 lg:mt-16">
-    <div class="text-center mb-8">
-      <h3 id="features-title" class="text-2xl font-extrabold text-gray-900">Sistema Híbrido Premium</h3>
-      <p id="features-subtitle" class="text-gray-600 mt-1">Tecnología lista para baterías con certificación UL</p>
-    </div>
-    
-    <div class="icon-grid">
-      <div class="icon-item">
-        <svg width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2" y="7" width="18" height="11" rx="2"/>
-          <line x1="22" y1="11" x2="22" y2="14"/>
-          <rect x="5" y="10" width="8" height="5" fill="#059669" opacity="0.2"/>
-        </svg>
-        <span>110Ah</span>
-      </div>
-      
-      <div class="icon-item">
-        <svg width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-          <path d="M3 3v5h5"/>
-          <path d="M3 12a9 9 0 0 0 9 9 9.75 0 0 0 6.74-2.74L21 16"/>
-          <path d="M21 21v-5h-5"/>
-        </svg>
-        <span>6000 CICLOS</span>
-      </div>
-      
-      <div class="icon-item">
-        <svg width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M2 8.5c5-4 12-4 17 0"/>
-          <path d="M5 12c3.5-2.5 9-2.5 12.5 0"/>
-          <path d="M8.5 15.5c1.5-1 4.5-1 6 0"/>
-          <circle cx="12" cy="19" r="1.5" fill="#059669" stroke="none"/>
-        </svg>
-        <span>WIFI SMART</span>
-      </div>
-      
-      <div class="icon-item">
-        <svg width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2L4 5v6c0 5.5 3.5 9.5 8 11 4.5-1.5 8-5.5 8-11V5l-8-3z"/>
-          <path d="M9 12l2 2 4-4" stroke-width="2.2"/>
-        </svg>
-        <span>UL CERTIFIED</span>
-      </div>
-      
-      <div class="icon-item">
-        <svg width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="1" y="6" width="18" height="12" rx="2"/>
-          <line x1="21" y1="10" x2="21" y2="14"/>
-          <line x1="7" y1="12" x2="13" y2="12"/>
-          <line x1="10" y1="9" x2="10" y2="15"/>
-        </svg>
-        <span>BATTERY READY</span>
-      </div>
-      
-      <div class="icon-item">
-        <svg width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="4" width="18" height="16" rx="2"/>
-          <line x1="3" y1="9" x2="21" y2="9"/>
-          <line x1="8" y1="3" x2="8" y2="7"/>
-          <line x1="16" y1="3" x2="16" y2="7"/>
-          <text x="12" y="17.5" text-anchor="middle" font-size="8" font-weight="800" fill="#059669" stroke="none" font-family="Inter">10</text>
-        </svg>
-        <span>10 AÑOS</span>
-      </div>
-      
-      <div class="icon-item">
-        <svg width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="4"/>
-          <line x1="12" y1="2" x2="12" y2="4.5"/>
-          <line x1="12" y1="19.5" x2="12" y2="22"/>
-          <line x1="2" y1="12" x2="4.5" y2="12"/>
-          <line x1="19.5" y1="12" x2="22" y2="12"/>
-          <line x1="4.9" y1="4.9" x2="6.7" y2="6.7"/>
-          <line x1="17.3" y1="17.3" x2="19.1" y2="19.1"/>
-          <line x1="4.9" y1="19.1" x2="6.7" y2="17.3"/>
-          <line x1="17.3" y1="6.7" x2="19.1" y2="4.9"/>
-        </svg>
-        <span>SOLAR OPT.</span>
-      </div>
-      
-      <div class="icon-item">
-        <svg width="45" height="45" viewBox="0 0 24" fill="none" stroke="#059669" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M14.7 6.3a5 5 0 0 0-7 7l-4.5 4.5 2.1 2.1 4.5-4.5a5 5 0 0 0 7-7l-1.5-1.5 2.5-2.5-2.1-2.1-2.5 2.5z"/>
-          <circle cx="17" cy="7" r="1" fill="#059669" stroke="none"/>
-        </svg>
-        <span>HEAVY DUTY</span>
-      </div>
-      
-      <div class="icon-item">
-        <svg width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2" y="6" width="16" height="11" rx="2"/>
-          <line x1="20" y1="10" x2="20" y2="13"/>
-          <path d="M10 14v4M7 17l3 3-3" stroke-width="2"/>
-          <rect x="5" y="9" width="10" height="2" fill="#059669" opacity="0.3" stroke="none"/>
-        </svg>
-        <span>DESCARGA PROFUNDA</span>
-      </div>
-    </div>
-  </div>
-</main>
+        function selectPanel(mode, panelId) {
+            selectedPanel = DATA.paneles.find(p => p.id === panelId);
+            renderPanelPicker(mode);
+        }
 
-<footer class="mt-16 border-t border-emerald-100 bg-white">
-  <div class="max-w-7xl mx-auto px-4 py-6 text-center text-sm text-gray-500">
-    <p>© 2024 Baja Pro-Services • Mexicali, B.C. • Sistemas diseñados para HSP 6.19 • Eficiencia 85%</p>
-  </div>
-</footer>
+        function renderAppliancePicker() {
+            const container = document.getElementById('a-app-picker');
+            container.innerHTML = DATA.cargas.map(c => `
+                <div class="appliance-card" id="app-${c.id}" onclick="toggleAppliance('${c.id}')">
+                    <img src="${c.img}">
+                    <div class="appliance-name">${c.es}</div>
+                    <div class="appliance-watts">${c.w}W</div>
+                    <div class="appliance-inputs" onclick="event.stopPropagation()">
+                        <input type="number" id="qty-${c.id}" placeholder="Cant." min="1" class="app_in" onchange="calcularOffGrid()">
+                        <input type="number" id="hrs-${c.id}" placeholder="Hrs/día" min="0.5" step="0.5" value="${c.def_h}" class="app_in" onchange="calcularOffGrid()">
+                    </div>
+                </div>
+            `).join('');
+        }
 
-<script>
-const HSP = 6.19;
-const EFICIENCIA = 0.85;
-const PRECIO_KW = 19066;
+        function toggleAppliance(id) {
+            const card = document.getElementById(`app-${id}`);
+            const qtyIn = document.getElementById(`qty-${id}`);
+            card.classList.toggle('selected');
+            if(card.classList.contains('selected')) qtyIn.value = 1; else qtyIn.value = '';
+            calcularOffGrid();
+        }
 
-let currentLang = 'es';
+        // =============================================
+        // LÓGICA 1: ON-GRID (INTERCONECTADO)
+        // =============================================
+        function calcularOnGrid() {
+            const kwh = parseFloat(document.getElementById('i-kwh').value);
+            const wa = document.getElementById('i-wa').value;
+            const name = document.getElementById('i-name').value;
+            
+            if(!kwh || !wa) { alert("Por favor ingresa consumo y WhatsApp."); return; }
 
-const translations = {
-  es: {
-    calcTitle: 'Calculadora Solar CFE',
-    calcSubtitle: 'Diseño preciso para Mexicali • HSP 6.19',
-    labelTarifa: 'Tarifa CFE',
-    labelConsumo: 'Consumo CFE',
-    labelFase: 'Fase',
-    labelExtra: 'kW Extra',
-    labelHybrid: 'Sistema Híbrido',
-    labelHybridDesc: 'Con respaldo de baterías • Battery Ready',
-    btnCalcular: 'Calcular Sistema Óptimo',
-    priceInfo: 'Precio base instalación: <span class="font-bold">$19,066 MXN</span> por kW • IVA incluido',
-    resultDesign: 'Diseño Recomendado',
-    labelGeneration: 'Generación',
-    labelPanels: 'Paneles',
-    labelInverter: 'Inversor',
-    labelBrand: 'Marca',
-    brandCert: 'UL Certified',
-    labelPrice: 'Inversión Total',
-    labelCurrent: 'Recibo Actual CFE',
-    labelNew: 'Nuevo Recibo',
-    labelSavings: 'Ahorro mensual estimado',
-    btnWhatsapp: 'Cotizar Ahora',
-    featuresTitle: 'Sistema Híbrido Premium',
-    featuresSubtitle: 'Tecnología lista para baterías con certificación UL',
-    periodoBimestral: 'bimestral',
-    periodoMensual: 'mensual',
-    currentPeriod: 'bimestral',
-    newPeriod: '~98% ahorro',
-    faseAuto: 'Auto a trifásico ≥10kW',
-    mono: 'Monofásico',
-    bi: 'Bifásico',
-    tri: 'Trifásico'
-  },
-  en: {
-    calcTitle: 'CFE Solar Calculator',
-    calcSubtitle: 'Precision design for Mexicali • HSP 6.19',
-    labelTarifa: 'CFE Tariff',
-    labelConsumo: 'CFE Consumption',
-    labelFase: 'Phase',
-    labelExtra: 'Extra kW',
-    labelHybrid: 'Hybrid System',
-    labelHybridDesc: 'With battery backup • Battery Ready',
-    btnCalcular: 'Calculate Optimal System',
-    priceInfo: 'Base installation price: <span class="font-bold">$19,066 MXN</span> per kW • VAT included',
-    resultDesign: 'Recommended Design',
-    labelGeneration: 'Generation',
-    labelPanels: 'Panels',
-    labelInverter: 'Inverter',
-    labelBrand: 'Brand',
-    brandCert: 'UL Certified',
-    labelPrice: 'Total Investment',
-    labelCurrent: 'Current CFE Bill',
-    labelNew: 'New Bill',
-    labelSavings: 'Estimated monthly savings',
-    btnWhatsapp: 'Quote Now',
-    featuresTitle: 'Premium Hybrid System',
-    featuresSubtitle: 'Battery-ready technology with UL certification',
-    periodoBimestral: 'bimonthly',
-    periodoMensual: 'monthly',
-    currentPeriod: 'bimonthly',
-    newPeriod: '~98% savings',
-    faseAuto: 'Auto to three-phase ≥10kW',
-    mono: 'Single-phase',
-    bi: 'Split-phase',
-    tri: 'Three-phase'
-  }
-};
+            // Lógica Analítica: Consumo diario / (HSP * Eficiencia) = kWp necesarios
+            const dcPower = (kwh / 60) / (PARAMS.HSP * PARAMS.EFF_SYS);
+            const numPanels = Math.ceil((dcPower * 1000) / selectedPanel.w);
+            const finalKw = (numPanels * selectedPanel.w) / 1000;
 
-function toggleLanguage() {
-  currentLang = currentLang === 'es' ? 'en' : 'es';
-  document.documentElement.lang = currentLang;
-  document.getElementById('lang-btn').textContent = currentLang === 'es' ? 'EN' : 'ES';
-  
-  const t = translations[currentLang];
-  document.getElementById('calc-title').textContent = t.calcTitle;
-  document.getElementById('calc-subtitle').textContent = t.calcSubtitle;
-  document.getElementById('label-tarifa').textContent = t.labelTarifa;
-  document.getElementById('label-consumo').textContent = t.labelConsumo;
-  document.getElementById('label-fase').textContent = t.labelFase;
-  document.getElementById('label-extra').textContent = t.labelExtra;
-  document.getElementById('label-hybrid').textContent = t.labelHybrid;
-  document.getElementById('label-hybrid-desc').textContent = t.labelHybridDesc;
-  document.getElementById('btn-calcular').textContent = t.btnCalcular;
-  document.getElementById('price-info').innerHTML = t.priceInfo;
-  document.getElementById('result-design').textContent = t.resultDesign;
-  document.getElementById('label-generation').textContent = t.labelGeneration;
-  document.getElementById('label-panels').textContent = t.labelPanels;
-  document.getElementById('label-inverter').textContent = t.labelInverter;
-  document.getElementById('label-brand').textContent = t.labelBrand;
-  document.getElementById('brand-cert').textContent = t.brandCert;
-  document.getElementById('label-price').textContent = t.labelPrice;
-  document.getElementById('label-current').textContent = t.labelCurrent;
-  document.getElementById('label-new').textContent = t.labelNew;
-  document.getElementById('label-savings').textContent = t.labelSavings;
-  document.getElementById('btn-whatsapp').textContent = t.btnWhatsapp;
-  document.getElementById('features-title').textContent = t.featuresTitle;
-  document.getElementById('features-subtitle').textContent = t.featuresSubtitle;
-  document.getElementById('fase-nota').textContent = t.faseAuto;
-  
-  // Update phase options
-  const faseSelect = document.getElementById('fase');
-  faseSelect.options[0].text = t.mono;
-  faseSelect.options[1].text = t.bi;
-  faseSelect.options[2].text = t.tri;
-  
-  actualizarPeriodo();
-  calcular();
-}
+            // Mostrar resultados
+            document.getElementById('i-res-kw').innerText = finalKw.toFixed(2);
+            document.getElementById('i-res-panels').innerText = numPanels;
+            document.getElementById('i-res-panel-desc').innerText = `Paneles ${selectedPanel.model} ${selectedPanel.w}W`;
+            
+            // Sugerir Inversor (Regla simple de dimensionamiento 1:1)
+            const invSize = finalKw < 6 ? 5 : (finalKw < 11 ? 10 : finalKw);
+            document.getElementById('i-res-inv').innerText = invSize + " kW";
 
-function actualizarPeriodo() {
-  const tarifa = document.getElementById('tarifa').value;
-  const domestico = ['1','1A','1B','1C','1D','1E','1F','DAC'].includes(tarifa);
-  const t = translations[currentLang];
-  document.getElementById('periodo-label').textContent = domestico ? t.periodoBimestral : t.periodoMensual;
-  document.getElementById('current-period').textContent = domestico ? t.periodoBimestral : t.periodoMensual;
-  document.getElementById('new-period').textContent = t.newPeriod;
-}
+            // Sugerir Kit RES
+            const kit = DATA.kits_i.find(k => kwh >= k.kwh_min && kwh <= k.kwh_max);
+            document.getElementById('i-kit-img').src = kit.img;
+            document.getElementById('i-kit-name').innerText = kit.name;
 
-function calcularReciboCFE(tarifa, kwh) {
-  let costo = 0;
-  const k = Math.max(0, kwh);
-  
-  if (['1','1A','1B','1C','1D','1E','1F'].includes(tarifa)) {
-    // Tarifas domésticas bimestrales simplificadas
-    const limites = { '1': 150, '1A': 300, '1B': 400, '1C': 850, '1D': 1000, '1E': 2000, '1F': 2500 };
-    const limiteBasico = limites[tarifa] || 150;
-    const basico = Math.min(k, limiteBasico) * 0.97;
-    const intermedio = Math.min(Math.max(k - limiteBasico, 0), 120) * 1.18;
-    const excedente = Math.max(k - limiteBasico - 120, 0) * 3.45;
-    costo = basico + intermedio + excedente + 78;
-  } else if (tarifa === 'DAC') {
-    costo = k * 6.25 + 125;
-  } else if (tarifa === 'PDBT') {
-    costo = k * 3.95 + 95;
-  } else if (tarifa === 'GDBT') {
-    costo = k * 3.65 + 340;
-  } else if (tarifa === 'GDMTO') {
-    costo = k * 2.95 + 520;
-  } else if (tarifa === 'GDMTH') {
-    costo = k * 2.85 + 580;
-  } else if (tarifa === 'DIST' || tarifa === 'DIT') {
-    costo = k * 2.45 + 890;
-  } else {
-    costo = k * 3.5 + 100;
-  }
-  
-  return Math.round(costo);
-}
+            // Configurar WhatsApp
+            const msg = `Hola Baja Pro. Soy ${name}. Usé la calculadora Interconectado:%0A Consumo: ${kwh} kWh/bim%0A Sistema sugerido: ${finalKw.toFixed(2)}kW (${numPanels} paneles ${selectedPanel.w}W). Quiero cotización formal.`;
+            document.getElementById('i-wa-sistemas').href = `https://wa.me/5216122198325?text=${msg}`;
 
-function seleccionarInversor(kw, fase, hybrid) {
-  const catalogo = [
-    { kw: 3, marca: 'Growatt', modelo: 'MIN 3000TL-XH', fases: '1', hybrid: true, max: 3.0 },
-    { kw: 5, marca: 'Growatt', modelo: 'MIN 5000TL-XH', fases: '1', hybrid: true, max: 5.0 },
-    { kw: 5, marca: 'SMA', modelo: 'Sunny Boy 5.0', fases: '1', hybrid: false, max: 5.0 },
-    { kw: 6, marca: 'SOLIS', modelo: 'S5-GR1P6K', fases: '1', hybrid: false, max: 6.0 },
-    { kw: 7.7, marca: 'SMA', modelo: 'Sunny Boy 7.7-US', fases: '1', hybrid: false, max: 7.7 },
-    { kw: 8, marca: 'GOODWE', modelo: 'GW8000-XS', fases: '1', hybrid: true, max: 8.0 },
-    { kw: 10, marca: 'Growatt', modelo: 'MID 10KTL3-XH', fases: '3', hybrid: true, max: 10.0 },
-    { kw: 10, marca: 'GOODWE', modelo: 'GW10K-DT', fases: '3', hybrid: false, max: 10.0 },
-    { kw: 15, marca: 'SMA', modelo: 'Sunny Tripower 15000TL', fases: '3', hybrid: false, max: 15.0 },
-    { kw: 20, marca: 'SOLIS', modelo: 'S5-GC20K', fases: '3', hybrid: false, max: 20.0 },
-    { kw: 25, marca: 'GOODWE', modelo: 'GW25K-MT', fases: '3', hybrid: false, max: 25.0 },
-    { kw: 30, marca: 'SMA', modelo: 'Sunny Tripower CORE1 30', fases: '3', hybrid: false, max: 30.0 },
-    { kw: 50, marca: 'SMA', modelo: 'Sunny Tripower CORE1 50', fases: '3', hybrid: false, max: 50.0 },
-    { kw: 60, marca: 'SOLIS', modelo: 'S5-GC60K', fases: '3', hybrid: false, max: 60.0 },
-    { kw: 75, marca: 'SMA', modelo: 'Sunny Tripower 75', fases: '3', hybrid: false, max: 75.0 },
-    { kw: 100, marca: 'SMA', modelo: 'Sunny Tripower 100', fases: '3', hybrid: false, max: 100.0 },
-  ];
+            document.getElementById('i-results').classList.add('show');
+        }
 
-  let faseReq = fase;
-  if (kw >= 10) faseReq = '3';
+        // =============================================
+        // LÓGICA 2: HÍBRIDO
+        // =============================================
+        function calcularHibrido() {
+            const invType = document.getElementById('h-inv-type').value;
+            const hours = parseFloat(document.getElementById('h-backup-hrs').value);
+            const loadW = parseFloat(document.getElementById('h-load-w').value);
+            
+            if(!hours || !loadW) { alert("Ingresa horas y carga de respaldo."); return; }
 
-  let opciones = catalogo.filter(inv => {
-    if (faseReq === '3' && inv.fases !== '3') return false;
-    if (faseReq !== '3' && inv.fases === '3' && kw < 10) return false;
-    if (hybrid && kw <= 10 && !inv.hybrid) return false;
-    return inv.max >= kw * 0.92;
-  });
+            const invData = DATA.inversores_h[invType];
+            const batData = DATA.baterias[invData.bat];
 
-  if (opciones.length === 0) {
-    opciones = catalogo.filter(i => i.max >= kw);
-  }
+            // Energía necesaria para respaldo (Wh)
+            const whNeeded = loadW * hours;
+            // Capacidad de batería neta necesaria (Wh) / DoD
+            const whBatGross = whNeeded / batData.dod;
+            // Número de módulos
+            const numModules = Math.ceil(whBatGross / (batData.kwh * 1000));
+            const totalKwh = (numModules * batData.kwh).toFixed(1);
 
-  opciones.sort((a, b) => a.max - b.max);
-  let sel = opciones[0] || catalogo[catalogo.length - 1];
+            // Render
+            document.getElementById('h-res-inv').innerText = invData.model;
+            document.getElementById('h-res-storage').innerText = totalKwh;
+            document.getElementById('h-res-bat-desc').innerText = `${numModules} módulos ${batData.model} (${batData.voltage}V)`;
 
-  if (kw > 100) {
-    const unidades = Math.ceil(kw / 100);
-    const base = catalogo.find(i => i.kw === 100);
-    sel = { ...base, unidades, max: unidades * 100, modelo: `${base.modelo} x${unidades}` };
-  }
+            // WhatsApp
+            const msg = `Hola Baja Pro. Diseño Híbrido:%0A Respaldo: ${loadW}W por ${hours}h.%0A Sugerido: Inversor ${invData.model} con ${totalKwh}kWh en litio (${numModules} mod).`;
+            document.getElementById('h-wa-btn').href = `https://wa.me/5216122198325?text=${msg}`;
 
-  return sel;
-}
+            document.getElementById('h-results').classList.add('show');
+        }
 
-function diseñarSistema() {
-  const tarifa = document.getElementById('tarifa').value;
-  const consumo = parseFloat(document.getElementById('consumo').value) || 0;
-  const faseInput = document.getElementById('fase').value;
-  const kwExtra = parseFloat(document.getElementById('kwExtra').value) || 0;
-  const hybrid = document.getElementById('hybrid').checked;
+        // =============================================
+        // LÓGICA 3: AISLADO (OFF-GRID MAESTRO)
+        // =============================================
+        function calcularOffGrid() {
+            const autonomy = parseFloat(document.getElementById('a-auto').value);
+            let dailyWh = 0;
+            let maxW = 0;
 
-  const esDomestico = ['1','1A','1B','1C','1D','1E','1F','DAC'].includes(tarifa);
-  const dias = esDomestico ? 60 : 30;
+            // Recorrer cargas seleccionadas
+            DATA.cargas.forEach(c => {
+                const card = document.getElementById(`app-${c.id}`);
+                if(card.classList.contains('selected')) {
+                    const qty = parseFloat(document.getElementById(`qty-${c.id}`).value) || 0;
+                    const hrs = parseFloat(document.getElementById(`hrs-${c.id}`).value) || 0;
+                    const wh = qty * c.w * hrs;
+                    dailyWh += wh;
+                    maxW += (qty * c.w); // Carga simultánea (simplificado para la demo)
+                }
+            });
 
-  const kwhDia = consumo / dias;
-  const kwpNecesario = kwhDia / (HSP * EFICIENCIA);
-  const kwpTotal = kwpNecesario + kwExtra;
+            if(dailyWh === 0) { document.getElementById('a-results').classList.remove('show'); return; }
 
-  let kwpSistema = Math.ceil(kwpTotal * 2) / 2;
-  if (kwpSistema < 3) kwpSistema = 3;
+            // 1. Paneles (Cubrir consumo diario + 30% pérdidas por carga/descarga)
+            // HSP es 5.8 en BCS
+            const dcPowerNeeded = (dailyWh * 1.3) / PARAMS.HSP;
+            const numPanels = Math.ceil(dcPowerNeeded / 700); // Usando panel Pro de 700W por defecto
 
-  let fase = faseInput;
-  const faseNota = document.getElementById('fase-nota');
-  if (kwpSistema >= 10) {
-    fase = '3';
-    document.getElementById('fase').value = '3';
-    faseNota.classList.remove('hidden');
-  } else {
-    faseNota.classList.add('hidden');
-  }
+            // 2. Baterías (Wh diarios * Autonomía) / (Voltaje * DoD)
+            // Asumimos Litio genérico a 48V, DoD 90%
+            const batGrossWh = (dailyWh * autonomy) / 0.9;
+            const batAh = Math.ceil(batGrossWh / 48);
+            // Referencia visual en kWh
+            const batKwh = (batGrossWh / 1000).toFixed(1);
 
-  const inversor = seleccionarInversor(kwpSistema, fase, hybrid);
-  const paneles = Math.ceil((kwpSistema * 1000) / 550);
-  const kwpReal = (paneles * 550) / 1000;
+            // 3. Inversor (Pico simultáneo + 25% seguridad)
+            const invKw = ((maxW * 1.25) / 1000).toFixed(1);
 
-  let precio = Math.round(kwpReal * PRECIO_KW);
-  if (hybrid) precio += 48500;
+            // Render
+            document.getElementById('a-res-daily').innerText = (dailyWh/1000).toFixed(1);
+            document.getElementById('a-res-panels').innerText = numPanels;
+            document.getElementById('a-res-storage').innerText = batKwh;
+            document.getElementById('a-res-bat-desc').innerText = `Banco de ${batAh}Ah a 48V (Litio)`;
+            document.getElementById('a-res-inv').innerText = invKw;
 
-  const reciboActual = calcularReciboCFE(tarifa, consumo);
-  const generacionMensual = kwpReal * HSP * EFICIENCIA * 30;
-  const consumoMensual = esDomestico ? consumo / 2 : consumo;
-  const consumoRemanente = Math.max(0, consumoMensual - generacionMensual);
-  const kwhRemanenteFacturable = esDomestico ? consumoRemanente * 2 : consumoRemanente;
-  const reciboNuevo = calcularReciboCFE(tarifa, kwhRemanenteFacturable);
-  const ahorro = Math.max(0, reciboActual - reciboNuevo);
+            // WhatsApp
+            const msg = `Hola Baja Pro. Proyecto Off-Grid:%0A Consumo Diálogo: ${(dailyWh/1000).toFixed(1)} kWh/día.%0A Configuración analítica: ${numPanels} paneles 700W, Inversor ${invKw}kW, Baterías ${batKwh}kWh.`;
+            document.getElementById('a-wa-btn').href = `https://wa.me/5216122198325?text=${msg}`;
 
-  return {
-    tarifa, consumo, kwpSistema: kwpReal, paneles, inversor, fase, hybrid,
-    precio, reciboActual, reciboNuevo, ahorro,
-    generacionMensual: Math.round(generacionMensual)
-  };
-}
-
-function actualizarBotonWhatsApp(sistema) {
-  if (!sistema) return;
-  const texto = currentLang === 'en'
-    ? `Hello Baja Pro-Services! I'm interested in a ${sistema.kwpSistema.toFixed(1)}kW solar system.\n• Tariff: ${sistema.tarifa}\n• Inverter: ${sistema.inversor.marca} ${sistema.inversor.modelo}\n• Panels: ${sistema.paneles} x 550W\n• Price: $${sistema.precio.toLocaleString('es-MX')} MXN\n• Hybrid: ${sistema.hybrid ? 'Yes' : 'No'}`
-    : `Hola Baja Pro-Services! Me interesa un sistema solar de ${sistema.kwpSistema.toFixed(1)}kW.\n• Tarifa: ${sistema.tarifa}\n• Inversor: ${sistema.inversor.marca} ${sistema.inversor.modelo}\n• Paneles: ${sistema.paneles} x 550W\n• Precio: $${sistema.precio.toLocaleString('es-MX')} MXN\n• Híbrido: ${sistema.hybrid ? 'Sí' : 'No'}`;
-  
-  const url = `https://wa.me/526861234567?text=${encodeURIComponent(texto)}`;
-  document.getElementById('whatsapp-btn').href = url;
-}
-
-function calcular() {
-  const sistema = diseñarSistema();
-  const t = translations[currentLang];
-  
-  document.getElementById('resultado-kwp').textContent = sistema.kwpSistema.toFixed(1) + ' kW';
-  document.getElementById('resultado-gen').textContent = sistema.generacionMensual.toLocaleString('es-MX') + ' kWh/mes';
-  document.getElementById('resultado-paneles').textContent = sistema.paneles + ' x 550W';
-  document.getElementById('resultado-inversor').textContent = `${sistema.inversor.marca} ${sistema.inversor.modelo}`;
-  document.getElementById('resultado-marca').textContent = sistema.inversor.marca;
-  
-  const faseTexto = sistema.fase === '3' ? t.tri : (sistema.fase === '2' ? t.bi : t.mono);
-  document.getElementById('resultado-fase').textContent = faseTexto;
-  
-  document.getElementById('resultado-precio').textContent = '$' + sistema.precio.toLocaleString('es-MX');
-  document.getElementById('resultado-actual').textContent = '$' + sistema.reciboActual.toLocaleString('es-MX');
-  document.getElementById('resultado-recibo').textContent = '$' + sistema.reciboNuevo.toLocaleString('es-MX');
-  
-  const ahorroMensual = sistema.ahorro / (['1','1A','1B','1C','1D','1E','1F','DAC'].includes(sistema.tarifa) ? 2 : 1);
-  document.getElementById('resultado-ahorro').textContent = '$' + Math.round(ahorroMensual).toLocaleString('es-MX') + '/mes';
-  
-  actualizarBotonWhatsApp(sistema);
-}
-
-// Initialize
-document.addEventListener('DOMContentLoaded', () => {
-  actualizarPeriodo();
-  calcular();
-});
-</script>
+            document.getElementById('a-results').classList.add('show');
+        }
+    </script>
 </body>
 </html>
